@@ -1,0 +1,2 @@
+[user_parameters]
+excluded_directories = [".venv", "__init__"]
