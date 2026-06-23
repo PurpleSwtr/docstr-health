@@ -20,6 +20,12 @@ class PythonFunction:
         )
 
     @property
+    def size(self) -> int:
+        if self._ast_node.end_lineno:
+            return self._ast_node.end_lineno - self._ast_node.lineno + 1
+        return 0
+
+    @property
     def has_docstring(self) -> bool:
         return ast.get_docstring(self._ast_node) is not None
 
@@ -51,3 +57,9 @@ class PythonModule:
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
         ]
         return [PythonFunction(name=node.name, ast_node=node) for node in nodes]
+
+    def get_functions_size(self) -> dict[str, int]:
+        return {func.name: func.size for func in self.functions}
+
+    def __str__(self):
+        return ""

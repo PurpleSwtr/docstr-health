@@ -1,2 +1,10 @@
 [user_parameters]
-excluded_directories = [".venv", "__init__"]
+excluded = [".venv", "__init__"]
+
+bad_symbol = "✗"
+good_symbol = "✔"
+special_symbol = "★"
+
+bad_color = "red"
+good_color = "green"
+special_color = "yellow"

@@ -6,7 +6,7 @@ ROOT: Path = Path(__file__).resolve().parent.parent.parent
 
 class Config:
     def __init__(self) -> None:
-        self.excluded_directories = self.parameters.get("excluded_directories", [])
+        self.excluded = self.parameters.get("excluded", [])
 
     @property
     def parameters(self) -> dict:
