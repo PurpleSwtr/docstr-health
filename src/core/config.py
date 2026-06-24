@@ -18,6 +18,9 @@ class Config:
 
     @property
     def requires(self) -> dict:
+        """
+        Свойство требований для получения функциями особых статусов
+        """
         return self.data.get("requires", {})
 
     @property

@@ -1,15 +1,19 @@
 import ast
 from pathlib import Path
 
+from core.config import config
+
 
 class PythonFunction:
     def __init__(
         self,
         name: str,
         ast_node: ast.FunctionDef | ast.AsyncFunctionDef,
+        source_file: Path | None = None,
     ):
         self.name = name
         self._ast_node = ast_node
+        self._source_file = source_file
 
     @property
     def is_full_dunder(self) -> bool:
@@ -60,8 +64,12 @@ class PythonModule:
             node
             for node in ast.walk(tree)
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and node.name not in config.parameters["excluded_functions"]
         ]
-        return [PythonFunction(name=node.name, ast_node=node) for node in nodes]
+        return [
+            PythonFunction(name=node.name, ast_node=node, source_file=self.file_path)
+            for node in nodes
+        ]
 
     @property
     def functions_to_check(self) -> list[PythonFunction]:

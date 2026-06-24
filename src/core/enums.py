@@ -6,3 +6,10 @@ class StatusDocstring(Enum):
     GOOD = "good"
     SPECIAL = "special"
     EPIC = "epic"
+
+
+class StatusTypechecking(Enum):
+    NONE = "bad"
+    ARGS = "waning"
+    RETURN = "waning"
+    FULL = "good"

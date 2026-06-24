@@ -1,7 +1,7 @@
 import argparse
 from pathlib import Path
 
-from checkers import DocstringChecker
+from checkers import DocstringChecker, TypeChecker
 from core.config import config
 from models import PythonModule
 
@@ -38,6 +38,11 @@ if __name__ == "__main__":
     for module in modules:
         checker = DocstringChecker(module)
         checker.check_module()
+
+    for module in modules:
+        checker = TypeChecker(module)
+        for func in module.functions:
+            checker.inspect_func_type_checking(func=func)
 
     # print(modules[0].get_functions_size())
     # print(
