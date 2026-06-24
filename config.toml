@@ -1,10 +1,17 @@
 [user_parameters]
-excluded = [".venv", "__init__"]
+excluded = [".venv", "__init__", "__pycache__"]
 
 bad_symbol = "✗"
 good_symbol = "✔"
 special_symbol = "★"
+epic_symbol = "♥"
 
 bad_color = "red"
 good_color = "green"
 special_color = "yellow"
+epic_color = "purple"
+
+[requires]
+
+special = ["Keyword arguments", "Args", "Parameters", "Attributes", "Keyword arguments:", "Args:", "Parameters:", "Attributes:", ":param", ":type"]
+epic = ["Returns", "Raises", "Returns:", "Raises:"]

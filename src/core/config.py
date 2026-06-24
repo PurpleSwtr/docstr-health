@@ -9,10 +9,20 @@ class Config:
         self.excluded = self.parameters.get("excluded", [])
 
     @property
-    def parameters(self) -> dict:
+    def data(self) -> dict:
+        """
+        Основной интерфейс для получения данных из конфигурации.
+        """
         with open(ROOT / "config.toml", "rb") as f:
-            data = tomllib.load(f)
-        return data.get("user_parameters", {})
+            return tomllib.load(f)
+
+    @property
+    def requires(self) -> dict:
+        return self.data.get("requires", {})
+
+    @property
+    def parameters(self) -> dict:
+        return self.data.get("user_parameters", {})
 
 
 config = Config()

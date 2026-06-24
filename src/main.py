@@ -1,6 +1,7 @@
 import argparse
 from pathlib import Path
 
+from checkers import DocstringChecker
 from core.config import config
 from models import PythonModule
 
@@ -34,17 +35,14 @@ if __name__ == "__main__":
     modules = [PythonModule(file_path=file) for file in python_files]
 
     # python_functions = map(lambda x: get_functions(x), python_files)
+    for module in modules:
+        checker = DocstringChecker(module)
+        checker.check_module()
 
-    all_functions_checked = [
-        function
-        for module in modules
-        for function in module.functions
-        if not function.is_dunder
-    ]
-    print(modules[0].get_functions_size())
-    print(
-        f"Найдено: {len(all_functions_checked)} функций: {', '.join(func.name for func in all_functions_checked)}"
-    )
-    print(
-        f"Докстринги написаны для: {sum(func.has_docstring for func in all_functions_checked)}/{len(all_functions_checked)}"
-    )
+    # print(modules[0].get_functions_size())
+    # print(
+    #     f"Найдено: {len(all_functions_checked)} функций: {', '.join(func.name for func in all_functions_checked)}"
+    # )
+    # print(
+    #     f"Докстринги написаны для: {sum(func.has_docstring for func in all_functions_checked)}/{len(all_functions_checked)}"
+    # )

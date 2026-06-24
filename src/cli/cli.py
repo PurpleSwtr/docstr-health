@@ -1,15 +1,8 @@
-from enum import Enum
-
 from rich.console import Console
 from rich.text import Text
 
-from src.core.config import config
-
-
-class StatusDocstring(Enum):
-    BAD = "bad"
-    GOOD = "good"
-    SPECIAL = "special"
+from core.config import config
+from core.enums import StatusDocstring
 
 
 class RichOutput:
@@ -24,13 +17,13 @@ class RichOutput:
     def cprint(self):
         self.console.print(self.text)
 
-    def func_docstring_status(self, func: str, status: StatusDocstring):
-        self.text = Text(f" - {config.parameters[f'{status.value}_symbol']} {func}")
+    def func_docstring_status(self, func_name: str, status: StatusDocstring):
+        self.text = Text(
+            f" - {config.parameters[f'{status.value}_symbol']} {func_name}"
+        )
         self.set_color(config.parameters[f"{status.value}_color"])
         self.text.stylize(self.color)
         self.cprint()
 
 
 ro = RichOutput()
-
-ro.func_docstring_status("__init__", StatusDocstring.BAD)
