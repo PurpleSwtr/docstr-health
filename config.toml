@@ -8,13 +8,17 @@ good_symbol = "✔"
 special_symbol = "★"
 epic_symbol = "♥"
 
+white_color = "white"
 bad_color = "red"
-warning_color = "orange1"
+warning_color = "dark_orange"
 good_color = "green"
 special_color = "yellow"
 epic_color = "purple"
 
-[requires]
-
+[requires_v1]
 special = ["Keyword arguments", "Args", "Parameters", "Attributes", "Keyword arguments:", "Args:", "Parameters:", "Attributes:", ":param", ":type"]
 epic = ["Returns", "Raises", "Returns:", "Raises:", ":returns", ":rtype", ":raises"]
+
+[requires_v2]
+special = ["Keyword arguments:", "Args:", "Parameters:", "Attributes:", "Keyword arguments", "Args", "Parameters", "Attributes", ":param", ":type"]
+epic = ["Returns:", "Raises:", "Usage:", "Examples:", "Returns", "Raises", "Usage", "Examples", ":returns", ":rtype", ":raises"]

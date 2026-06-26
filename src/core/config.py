@@ -21,7 +21,7 @@ class Config:
         """
         Свойство требований для получения функциями особых статусов
         """
-        return self.data.get("requires", {})
+        return self.data.get("requires_v1", {})
 
     @property
     def parameters(self) -> dict:

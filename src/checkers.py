@@ -34,6 +34,16 @@ class DocstringChecker(BaseChecker):
     def total_inspected_statuses(self):
         return sum(status for status in list(self.inspected_statuses.values()))
 
+    def display_statistics(self):
+        for status, value in self.inspected_statuses.items():
+            print(status, value)
+
+        # self.output.display_panel(
+        #         text=inspected_functions,
+        #         title=str(self.module),
+        #         panel_status=panel_status,
+        #     )
+
     def check_module(self):
         inspected_functions = []
 
@@ -48,6 +58,7 @@ class DocstringChecker(BaseChecker):
                 title=str(self.module),
                 panel_status=panel_status,
             )
+        self.display_statistics()
         print("\n")
 
     @property
@@ -65,7 +76,7 @@ class DocstringChecker(BaseChecker):
         total = self.total_inspected_statuses
         statuses = self.inspected_statuses
 
-        if statuses["bad"] == total:
+        if statuses["bad"] == total or statuses["bad"] > 0.5 * total:
             return "bad"
 
         if statuses["bad"] > 0:
@@ -82,6 +93,8 @@ class DocstringChecker(BaseChecker):
             return "special"
 
         return "good"
+
+    def get_statistics_text(self): ...
 
     def get_func_status_text(self, func: PythonFunction) -> Text:
         status = self.inspect_func_status(func)

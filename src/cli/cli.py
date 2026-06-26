@@ -27,14 +27,17 @@ class RichOutput:
 
         return Text(f" - {symbol} {func_name}", style=self.color)
 
-    def display_panel(self, text: list[Text], title: str, panel_status: str):
+    def display_panel(self, text: list[Text], title: str, panel_status: str = "white"):
         content = Group(*text)
         symbol = config.parameters[f"{panel_status}_symbol"]
+        subtitle = None
+        if panel_status != "white":
+            subtitle = f"{symbol} {panel_status} {symbol}"
         rich_print(
             Panel.fit(
                 content,
                 title=title,
-                subtitle=f"{symbol} {panel_status} {symbol}",
+                subtitle=subtitle,
                 border_style=config.parameters[f"{panel_status}_color"],
             )
         )

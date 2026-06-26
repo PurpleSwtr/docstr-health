@@ -30,7 +30,7 @@ class PythonFunction:
     @property
     def size(self) -> int:
         if self._ast_node.end_lineno:
-            return self._ast_node.end_lineno - self._ast_node.lineno + 1
+            return self._ast_node.end_lineno - self._ast_node.lineno
         return 0
 
     @property

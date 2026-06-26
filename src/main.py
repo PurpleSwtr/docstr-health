@@ -41,8 +41,9 @@ if __name__ == "__main__":
 
     for module in modules:
         checker = TypeChecker(module)
-        for func in module.functions:
+        for func in module.functions_to_check:
             checker.inspect_func_type_checking(func=func)
+            print(f"{func.name} - {func.size}")
 
     # print(modules[0].get_functions_size())
     # print(
