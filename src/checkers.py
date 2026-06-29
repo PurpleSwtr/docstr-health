@@ -34,10 +34,15 @@ class DocstringChecker(BaseChecker):
     def total_inspected_statuses(self):
         return sum(status for status in list(self.inspected_statuses.values()))
 
-    def display_statistics(self):
+    def get_statistics(self) -> list[Text]:
+        statistics = []
+        statistics.append(Text("Statistics:", justify="center"))
         for status, value in self.inspected_statuses.items():
-            print(status, value)
-
+            if value > 0:
+                symbol = config.parameters[f"{status}_symbol"]
+                color = config.parameters[f"{status}_color"]
+                statistics.append(Text(f"{symbol} {status} - {value}", style=color))
+        return statistics
         # self.output.display_panel(
         #         text=inspected_functions,
         #         title=str(self.module),
@@ -52,13 +57,18 @@ class DocstringChecker(BaseChecker):
 
         panel_status = self.module_status
 
+        statistics = self.get_statistics()
+        content = []
+
+        content.append(inspected_functions)
+        content.append(statistics)
+
         if inspected_functions:
             self.output.display_panel(
-                text=inspected_functions,
+                text=content,
                 title=str(self.module),
                 panel_status=panel_status,
             )
-        self.display_statistics()
         print("\n")
 
     @property

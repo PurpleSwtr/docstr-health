@@ -2,13 +2,14 @@
 excluded = [".venv", "__init__", "__pycache__"]
 excluded_functions = ["wrapper"]
 
+common_symbol = "●"
 bad_symbol = "✗"
 warning_symbol = "⚠"
 good_symbol = "✔"
 special_symbol = "★"
 epic_symbol = "♥"
-
-white_color = "white"
+    
+common_color = "white"
 bad_color = "red"
 warning_color = "dark_orange"
 good_color = "green"

@@ -1,7 +1,7 @@
-import argparse
 from pathlib import Path
 
 from checkers import DocstringChecker, TypeChecker
+from cli.parser import get_parser
 from core.config import config
 from models import PythonModule
 
@@ -17,14 +17,7 @@ def scan_dir(folder_path: Path, excluded: list) -> list[Path]:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Проверка docstring и тестов.")
-
-    parser.add_argument(
-        "project_path",
-        type=Path,
-        help="Путь к директории для проверки",
-    )
-
+    parser = get_parser()
     args = parser.parse_args()
 
     target_dir = args.project_path
@@ -39,11 +32,11 @@ if __name__ == "__main__":
         checker = DocstringChecker(module)
         checker.check_module()
 
-    for module in modules:
-        checker = TypeChecker(module)
-        for func in module.functions_to_check:
-            checker.inspect_func_type_checking(func=func)
-            print(f"{func.name} - {func.size}")
+    # for module in modules:
+    #     checker = TypeChecker(module)
+    #     for func in module.functions_to_check:
+    #         checker.inspect_func_type_checking(func=func)
+    # print(f"{func.name} - {func.size}")
 
     # print(modules[0].get_functions_size())
     # print(

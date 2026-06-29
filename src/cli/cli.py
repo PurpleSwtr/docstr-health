@@ -1,6 +1,7 @@
 from rich import print as rich_print
 from rich.console import Console, Group
 from rich.panel import Panel
+from rich.rule import Rule
 from rich.text import Text
 
 from core.config import config
@@ -11,7 +12,7 @@ class RichOutput:
     def __init__(self) -> None:
         self.console = Console()
         # self.text = ""
-        self.color = "white"
+        self.color = "common"
 
     def set_color(self, color: str):
         self.color = color
@@ -27,18 +28,29 @@ class RichOutput:
 
         return Text(f" - {symbol} {func_name}", style=self.color)
 
-    def display_panel(self, text: list[Text], title: str, panel_status: str = "white"):
-        content = Group(*text)
+    def display_panel(
+        self, text: list[list[Text]], title: str, panel_status: str = "common"
+    ):
         symbol = config.parameters[f"{panel_status}_symbol"]
-        subtitle = None
-        if panel_status != "white":
-            subtitle = f"{symbol} {panel_status} {symbol}"
+        subtitle = f"{symbol} {panel_status} {symbol}"
+        border_style = config.parameters[f"{panel_status}_color"]
+
+        render: list = []
+
+        for i, block in enumerate(text):
+            render.extend(block)
+
+            if i < len(text) - 1:
+                render.append(Rule(style="dim"))
+
+        content = Group(*render)
+
         rich_print(
             Panel.fit(
                 content,
                 title=title,
                 subtitle=subtitle,
-                border_style=config.parameters[f"{panel_status}_color"],
+                border_style=border_style,
             )
         )
 
