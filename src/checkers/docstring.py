@@ -1,28 +1,11 @@
-import ast
-from functools import wraps
-from typing import Callable
-
 from rich.text import Text
 
-from cli.cli import RichOutput
+from checkers.base import BaseChecker
 from core.config import config
-from core.enums import StatusDocstring, StatusTypechecking
-from models import PythonFunction, PythonModule
-
-
-class BaseChecker:
-    def __init__(self, module: PythonModule) -> None:
-        self.module = module
-        self.output = RichOutput()
-
-    def displayed_module(self, func: Callable):
-        @wraps(func)
-        def wrapper(*args, **kwargs):
-            print(str(f"| {self.module} |").center(32, "-"))
-            res = func(*args, **kwargs)
-            return res
-
-        return wrapper
+from core.enums import StatusDocstring
+from models.function import PythonFunction
+from models.module import PythonModule
+from models.report import ModuleReport
 
 
 class DocstringChecker(BaseChecker):
@@ -49,7 +32,7 @@ class DocstringChecker(BaseChecker):
         #         panel_status=panel_status,
         #     )
 
-    def check_module(self):
+    def check_module(self) -> ModuleReport:
         inspected_functions = []
 
         for func in self.module.functions_to_check:
@@ -70,6 +53,8 @@ class DocstringChecker(BaseChecker):
                 panel_status=panel_status,
             )
         print("\n")
+
+        return ModuleReport(module_status=self.module_status)
 
     @property
     def module_status(self) -> str:
@@ -125,22 +110,3 @@ class DocstringChecker(BaseChecker):
 
         self.inspected_statuses["good"] += 1
         return StatusDocstring.GOOD
-
-
-class TestCoverageChecker(BaseChecker): ...
-
-
-# В дальнейшем можно придумать что-то такое, пока что набросал прототипчик
-class TypeChecker(BaseChecker):
-    @staticmethod
-    def inspect_func_type_checking(func: PythonFunction) -> StatusTypechecking:
-        for arg in func._ast_node.args.args:
-            if arg.annotation:
-                ann_str = ast.unparse(arg.annotation)
-            else:
-                return StatusTypechecking.ARGS
-
-        if func._ast_node.returns:
-            ann_str = ast.unparse(func._ast_node.returns)
-        else:
-            return StatusTypechecking.RETURN

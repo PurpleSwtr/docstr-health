@@ -1,6 +1,15 @@
 from enum import Enum
 
 
+class ModuleStatus(Enum):
+    COMMON = "common"
+    BAD = "bad"
+    WARNING = "warning"
+    GOOD = "good"
+    SPECIAL = "special"
+    EPIC = "epic"
+
+
 class StatusDocstring(Enum):
     BAD = "bad"
     GOOD = "good"
