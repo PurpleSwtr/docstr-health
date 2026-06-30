@@ -15,7 +15,7 @@ class PythonModule:
         nodes = [
             node
             for node in ast.walk(tree)
-            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
             and node.name not in config.parameters["excluded_functions"]
         ]
         return [

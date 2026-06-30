@@ -6,12 +6,21 @@ class PythonFunction:
     def __init__(
         self,
         name: str,
-        ast_node: ast.FunctionDef | ast.AsyncFunctionDef,
+        ast_node: ast.FunctionDef | ast.AsyncFunctionDef | ast.ClassDef,
         source_file: Path | None = None,
     ):
-        self.name = name
         self._ast_node = ast_node
         self._source_file = source_file
+        self.name = self._set_name(name)
+
+    def _set_name(self, name: str) -> str:
+        match self._ast_node:
+            case ast.ClassDef():
+                return f"{name} (class)"
+            case ast.AsyncFunctionDef():
+                return f"{name} (async)"
+            case _:
+                return name
 
     @property
     def is_full_dunder(self) -> bool:

@@ -14,8 +14,15 @@ class ProjectChecker:
         self.modules = [PythonModule(file_path=file) for file in self._python_files]
         self._reports: list[ModuleReport] = []
 
-    def _get_count_function(self) -> int:
-        return self._get_statuses_stat().total()
+    def get_quantity_of_func_type(self) -> dict:
+        counters = [
+            Counter(report.get_func_type_quantity()) for report in self._reports
+        ]
+        total_counter = sum(counters, Counter())
+        return dict(total_counter)
+
+    def _get_count_modules(self) -> int:
+        return len(self.modules)
 
     def _get_statuses_stat(self) -> Counter:
         statuses: list = [report.module_status for report in self._reports]

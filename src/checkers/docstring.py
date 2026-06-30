@@ -52,9 +52,13 @@ class DocstringChecker(BaseChecker):
                 title=str(self.module),
                 panel_status=panel_status,
             )
-        print("\n")
 
-        return ModuleReport(module_status=self.module_status)
+        mr = ModuleReport(
+            module_status=self.module_status,
+            inspected_functions=self.module.functions_to_check,
+        )
+        # mr.p_inspected_functions()
+        return mr
 
     @property
     def module_status(self) -> str:

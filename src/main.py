@@ -1,3 +1,6 @@
+from rich import print
+from rich.columns import Columns
+
 from checkers.project import ProjectChecker
 from cli.cli import RichOutput
 from cli.parser import get_parser
@@ -14,14 +17,28 @@ if __name__ == "__main__":
 
     project_checker.docstring_check()
 
-    statuses = project_checker._get_statuses_stat()
     renderer = RichOutput()
-    renderer.display_table(
+
+    statuses = project_checker._get_statuses_stat()
+
+    general_stat_data = project_checker.get_quantity_of_func_type()
+    general_stat_data["modules"] = project_checker._get_count_modules()
+    general_stat_data["total"] = sum(general_stat_data.values())
+
+    table1 = renderer.get_table(
+        title="General statistics",
+        headers=["Metric", "Value"],
+        data=general_stat_data,
+        sorting_reference=config.get_sorted_general_stat(),
+        last_line_separator=True,
+    )
+    table2 = renderer.get_table(
         title="Number of modules of each status",
         headers=["Module status", "Quantity"],
         data=statuses,
+        sorting_reference=config.get_sorted_statuses(),
     )
-
+    print(Columns([table1, table2]))
     # python_functions = map(lambda x: get_functions(x), python_files)
 
     # for module in modules:

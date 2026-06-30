@@ -52,8 +52,10 @@ class RichOutput:
                 title=title,
                 subtitle=subtitle,
                 border_style=border_style,
+                padding=(1, 2),
             )
         )
+        print("\n")
 
     @staticmethod
     def _get_style(value: str):
@@ -86,19 +88,39 @@ class RichOutput:
     def _sort_statuses(statuses: list) -> list:
         return sorted(statuses, key=config.get_sorted_statuses().index)
 
-    def display_table(self, title: str, headers: list[str], data: dict):
+    def get_table(
+        self,
+        title: str,
+        headers: list[str],
+        data: dict,
+        sorting_reference: list | None = None,
+        last_line_separator: bool = False,
+    ) -> Table:
         table = Table(title=title)
+
         for header in headers:
             table.add_column(header, justify="center")
 
-        table_data = self.prepare_dict_table(data, config.get_sorted_statuses())
+        table_data = self.prepare_dict_table(data, sorting_reference)
 
-        for status, count in table_data:
+        style = ""
+        end_section = False
+
+        total_rows = len(table_data)
+
+        for i, (status, count) in enumerate(table_data):
+            # last line check
+            if i == total_rows - 2 and last_line_separator:
+                end_section = True
+            if status in config.get_sorted_statuses():
+                style = self._get_style(status)
+                status = self.get_status_with_symbol(status=status)
             status_text = Text(
-                self.get_status_with_symbol(status=status),
-                style=self._get_style(status),
+                status,
+                style=style,
                 justify="left",
             )
-            table.add_row(status_text, str(count))
-
+            table.add_row(status_text, str(count), end_section=end_section)
+        return table
         self.console.print(table)
+        print("\n")

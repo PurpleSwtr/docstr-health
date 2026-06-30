@@ -12,6 +12,16 @@ class Config:
     def get_sorted_statuses() -> list[str]:
         return ["bad", "warning", "good", "special", "epic"]
 
+    @staticmethod
+    def get_sorted_general_stat() -> list[str]:
+        return [
+            "modules",
+            "class",
+            "function",
+            "async function",
+            "total",
+        ]
+
     @property
     def data(self) -> dict:
         """
@@ -25,7 +35,7 @@ class Config:
         """
         Свойство требований для получения функциями особых статусов
         """
-        return self.data.get("requires_v1", {})
+        return self.data.get("requires_v2", {})
 
     @property
     def parameters(self) -> dict:
