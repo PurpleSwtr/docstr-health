@@ -6,7 +6,7 @@ class BaseSource(ABC):
     """Base class for data sources."""
 
     @abstractmethod
-    def get_path(self) -> Path:
+    def get_path(self) -> Path | None:
         """
         Returns the path to the directory to be analyzed.
         """

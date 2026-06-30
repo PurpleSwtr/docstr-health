@@ -1,12 +1,17 @@
 import tomllib
 from pathlib import Path
 
-ROOT: Path = Path(__file__).resolve().parent.parent.parent
+_ROOT: Path = Path(__file__).resolve().parent.parent.parent
+_CACHE_DIR = Path.home() / ".docstring-test-checker" / "repos"
 
 
 class Config:
     def __init__(self) -> None:
         self.excluded = self.parameters.get("excluded", [])
+
+    @staticmethod
+    def get_cache_dir() -> Path:
+        return _CACHE_DIR
 
     @staticmethod
     def get_sorted_statuses() -> list[str]:
@@ -27,7 +32,7 @@ class Config:
         """
         Основной интерфейс для получения данных из конфигурации.
         """
-        with open(ROOT / "config.toml", "rb") as f:
+        with open(_ROOT / "config.toml", "rb") as f:
             return tomllib.load(f)
 
     @property

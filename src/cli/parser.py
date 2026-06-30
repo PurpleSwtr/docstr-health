@@ -1,6 +1,8 @@
 import argparse
 from pathlib import Path
 
+from core.config import config
+
 
 def get_parser():
     parser = argparse.ArgumentParser(
@@ -10,6 +12,8 @@ def get_parser():
     parser.add_argument(
         "project_path",
         type=Path,
+        nargs="?",
+        default=".",
         help="Путь к директории для проверки",
     )
 
@@ -21,8 +25,15 @@ def get_parser():
 
     parser.add_argument(
         "--repo-url",
-        action="store_true",
+        type=str,
         help="Просканировать проект из удалённого репозитория.",
+    )
+
+    parser.add_argument(
+        "--cache-dir",
+        type=Path,
+        default=config.get_cache_dir(),
+        help=f"Directory for cached repositories (default: {config.get_cache_dir()})",
     )
 
     return parser

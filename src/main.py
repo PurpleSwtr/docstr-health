@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from rich import print
 from rich.columns import Columns
 
@@ -13,15 +15,16 @@ def main():
     parser = get_parser()
     args = parser.parse_args()
 
-    target_dir = args.project_path
-    excluded = config.excluded
+    if not args.repo_url:
+        parser.error("Either project_path or --repo-url must be provided.")
 
     source = None
+    excluded = config.excluded
 
     if args.repo_url:
-        source = GitRepositorySource(target_dir)
+        source = GitRepositorySource(args.repo_url)
     else:
-        source = LocalSource(target_dir)
+        source = LocalSource(args.project_path)
 
     project_checker = ProjectChecker(source=source, excluded=excluded)
 

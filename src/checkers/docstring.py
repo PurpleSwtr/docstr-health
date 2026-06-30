@@ -1,5 +1,3 @@
-""" """
-
 from rich.text import Text
 
 from checkers.base import BaseChecker
