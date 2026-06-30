@@ -8,13 +8,20 @@ from models.function import PythonFunction
 class PythonModule:
     def __init__(self, file_path: Path):
         self.file_path = file_path
+        self._tree: ast.Module | None = None
+
+    @property
+    def tree(self) -> ast.Module:
+        """Lazy loading ast-tree"""
+        if self._tree is None:
+            self._tree = ast.parse(self.file_path.read_text(encoding="utf-8"))
+        return self._tree
 
     @property
     def functions(self) -> list[PythonFunction]:
-        tree = ast.parse(self.file_path.read_text(encoding="utf-8"))
         nodes = [
             node
-            for node in ast.walk(tree)
+            for node in ast.walk(self.tree)
             if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
             and node.name not in config.parameters["excluded_functions"]
         ]
@@ -30,6 +37,10 @@ class PythonModule:
             for function in self.functions
             if not function.is_full_dunder and not function.is_once_dunder
         ]
+
+    def get_module_docstring(self) -> str | None:
+        """Returns self docstring of module"""
+        return ast.get_docstring(self.tree)
 
     def get_functions_size(self) -> dict[str, int]:
         return {func.name: func.size for func in self.functions}

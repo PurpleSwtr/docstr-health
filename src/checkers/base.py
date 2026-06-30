@@ -11,7 +11,7 @@ class BaseChecker(ABC):
         self.output = RichOutput()
 
     @abstractmethod
-    def check_module(self) -> ModuleReport:
+    def check_module(self) -> ModuleReport | None:
         """Check the module and return a report.
 
         Subclasses must implement this method to define

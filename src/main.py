@@ -5,15 +5,25 @@ from checkers.project import ProjectChecker
 from cli.cli import RichOutput
 from cli.parser import get_parser
 from core.config import config
+from sources.git_repo import GitRepositorySource
+from sources.local import LocalSource
 
-if __name__ == "__main__":
+
+def main():
     parser = get_parser()
     args = parser.parse_args()
 
     target_dir = args.project_path
     excluded = config.excluded
 
-    project_checker = ProjectChecker(target_dir=target_dir, excluded=excluded)
+    source = None
+
+    if args.repo_url:
+        source = GitRepositorySource(target_dir)
+    else:
+        source = LocalSource(target_dir)
+
+    project_checker = ProjectChecker(source=source, excluded=excluded)
 
     project_checker.docstring_check()
 
@@ -54,3 +64,7 @@ if __name__ == "__main__":
     # print(
     #     f"Докстринги написаны для: {sum(func.has_docstring for func in all_functions_checked)}/{len(all_functions_checked)}"
     # )
+
+
+if __name__ == "__main__":
+    main()

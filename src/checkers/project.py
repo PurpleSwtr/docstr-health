@@ -4,15 +4,20 @@ from pathlib import Path
 from checkers.docstring import DocstringChecker
 from models.module import PythonModule
 from models.report import ModuleReport
+from sources.base import BaseSource
 
 
 class ProjectChecker:
-    def __init__(self, target_dir: Path, excluded: list[str]) -> None:
-        self._target_dir = target_dir
+    def __init__(self, source: BaseSource, excluded: list[str]) -> None:
+        self.source: BaseSource = source
         self._excluded = excluded
         self._python_files = self._scan_python_files()
         self.modules = [PythonModule(file_path=file) for file in self._python_files]
         self._reports: list[ModuleReport] = []
+
+    @property
+    def _target_dir(self):
+        return self.source.get_path()
 
     def get_quantity_of_func_type(self) -> dict:
         counters = [
@@ -22,7 +27,7 @@ class ProjectChecker:
         return dict(total_counter)
 
     def _get_count_modules(self) -> int:
-        return len(self.modules)
+        return len(self._reports)
 
     def _get_statuses_stat(self) -> Counter:
         statuses: list = [report.module_status for report in self._reports]
@@ -32,7 +37,8 @@ class ProjectChecker:
         for module in self.modules:
             checker = DocstringChecker(module)
             module_report = checker.check_module()
-            self._reports.append(module_report)
+            if module_report is not None:
+                self._reports.append(module_report)
 
     def _scan_python_files(self) -> list[Path]:
         result: list[Path] = []

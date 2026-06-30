@@ -1,3 +1,5 @@
+""" """
+
 from rich.text import Text
 
 from checkers.base import BaseChecker
@@ -32,8 +34,19 @@ class DocstringChecker(BaseChecker):
         #         panel_status=panel_status,
         #     )
 
-    def check_module(self) -> ModuleReport:
-        inspected_functions = []
+    def check_module(self) -> ModuleReport | None:
+        if not self.module.functions_to_check:
+            return None
+
+        inspected_functions = [Text("Inspected:", justify="center")]
+
+        module_docstring = self.module.get_module_docstring()
+        module_status = self.check_docstring(module_docstring)
+        module_text = self.output.func_docstring_status(
+            func_name="__doc__",
+            status=module_status,
+        )
+        inspected_functions.append(module_text)
 
         for func in self.module.functions_to_check:
             inspected_functions.append(self.get_func_status_text(func))
@@ -46,12 +59,11 @@ class DocstringChecker(BaseChecker):
         content.append(inspected_functions)
         content.append(statistics)
 
-        if inspected_functions:
-            self.output.display_panel(
-                text=content,
-                title=str(self.module),
-                panel_status=panel_status,
-            )
+        self.output.display_panel(
+            text=content,
+            title=str(self.module),
+            panel_status=panel_status,
+        )
 
         mr = ModuleReport(
             module_status=self.module_status,
@@ -93,14 +105,34 @@ class DocstringChecker(BaseChecker):
 
         return "good"
 
-    def get_statistics_text(self): ...
+    def inspect_func_status(self, func: PythonFunction) -> StatusDocstring:
+        """Checking the state of a function docstring."""
+        docstring = func.get_docstring()
+        return self.check_docstring(docstring)
 
     def get_func_status_text(self, func: PythonFunction) -> Text:
         status = self.inspect_func_status(func)
         return self.output.func_docstring_status(func_name=func.name, status=status)
 
-    def inspect_func_status(self, func: PythonFunction) -> StatusDocstring:
-        docstring = func.get_docstring()
+    def check_docstring(self, docstring: str | None) -> StatusDocstring:
+        """Evaluate the quality of a docstring and assign a status.
+
+        The evaluation follows a priority based on content presence
+        and keyword matching:
+            1. BAD: Docstring is missing or empty.
+            2. GOOD: Has content but lacks EPIC/SPECIAL keywords.
+            3. SPECIAL: Contains basic parameter keywords.
+            4. EPIC: Contains advanced keywords.
+
+        This method also increments the corresponding counter in
+        ``self.inspected_statuses``.
+
+        Args:
+            docstring: The docstring text to evaluate, or None.
+
+        Returns:
+            StatusDocstring: The matched status enum value.
+        """
         if not docstring:
             self.inspected_statuses["bad"] += 1
             return StatusDocstring.BAD

@@ -19,4 +19,10 @@ def get_parser():
         help="Выводить только общую статистику, скрывая список функций.",
     )
 
+    parser.add_argument(
+        "--repo-url",
+        action="store_true",
+        help="Просканировать проект из удалённого репозитория.",
+    )
+
     return parser
