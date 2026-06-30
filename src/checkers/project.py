@@ -1,7 +1,9 @@
+from collections import Counter
 from pathlib import Path
 
 from checkers.docstring import DocstringChecker
 from models.module import PythonModule
+from models.report import ModuleReport
 
 
 class ProjectChecker:
@@ -10,11 +12,14 @@ class ProjectChecker:
         self._excluded = excluded
         self._python_files = self._scan_python_files()
         self.modules = [PythonModule(file_path=file) for file in self._python_files]
-        self._reports = []
+        self._reports: list[ModuleReport] = []
 
-    # def get_statistic(self) -> list:
-    #     for report in self._reports:
-    #         print(len(report.module_status))
+    def _get_count_function(self) -> int:
+        return self._get_statuses_stat().total()
+
+    def _get_statuses_stat(self) -> Counter:
+        statuses: list = [report.module_status for report in self._reports]
+        return Counter(statuses)
 
     def docstring_check(self):
         for module in self.modules:

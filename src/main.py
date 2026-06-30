@@ -1,4 +1,5 @@
 from checkers.project import ProjectChecker
+from cli.cli import RichOutput
 from cli.parser import get_parser
 from core.config import config
 
@@ -12,6 +13,14 @@ if __name__ == "__main__":
     project_checker = ProjectChecker(target_dir=target_dir, excluded=excluded)
 
     project_checker.docstring_check()
+
+    statuses = project_checker._get_statuses_stat()
+    renderer = RichOutput()
+    renderer.display_table(
+        title="Number of modules of each status",
+        headers=["Module status", "Quantity"],
+        data=statuses,
+    )
 
     # python_functions = map(lambda x: get_functions(x), python_files)
 

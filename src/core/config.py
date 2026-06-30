@@ -8,6 +8,10 @@ class Config:
     def __init__(self) -> None:
         self.excluded = self.parameters.get("excluded", [])
 
+    @staticmethod
+    def get_sorted_statuses() -> list[str]:
+        return ["bad", "warning", "good", "special", "epic"]
+
     @property
     def data(self) -> dict:
         """
