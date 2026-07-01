@@ -24,6 +24,12 @@ def get_parser():
     )
 
     parser.add_argument(
+        "--doc-modules",
+        action="store_true",
+        help="Учитывать __doc__ самих файлов",
+    )
+
+    parser.add_argument(
         "--repo-url",
         type=str,
         help="Просканировать проект из удалённого репозитория.",

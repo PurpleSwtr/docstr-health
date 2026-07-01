@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from rich import print
 from rich.columns import Columns
 
@@ -15,9 +13,6 @@ def main():
     parser = get_parser()
     args = parser.parse_args()
 
-    if not args.repo_url:
-        parser.error("Either project_path or --repo-url must be provided.")
-
     source = None
     excluded = config.excluded
 
@@ -26,7 +21,7 @@ def main():
     else:
         source = LocalSource(args.project_path)
 
-    project_checker = ProjectChecker(source=source, excluded=excluded)
+    project_checker = ProjectChecker(source=source, excluded=excluded, args=args)
 
     project_checker.docstring_check()
 
@@ -35,7 +30,8 @@ def main():
     statuses = project_checker._get_statuses_stat()
 
     general_stat_data = project_checker.get_quantity_of_func_type()
-    general_stat_data["modules"] = project_checker._get_count_modules()
+    if args.doc_modules:
+        general_stat_data["modules"] = project_checker._get_count_modules()
     general_stat_data["total"] = sum(general_stat_data.values())
 
     table1 = renderer.get_table(

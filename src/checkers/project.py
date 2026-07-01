@@ -1,3 +1,4 @@
+from argparse import Namespace
 from collections import Counter
 from pathlib import Path
 
@@ -8,12 +9,15 @@ from sources.base import BaseSource
 
 
 class ProjectChecker:
-    def __init__(self, source: BaseSource, excluded: list[str]) -> None:
+    def __init__(
+        self, source: BaseSource, excluded: list[str], args: Namespace
+    ) -> None:
         self.source: BaseSource = source
         self._excluded = excluded
         self._python_files = self._scan_python_files()
         self.modules = [PythonModule(file_path=file) for file in self._python_files]
         self._reports: list[ModuleReport] = []
+        self.args: Namespace = args
 
     @property
     def _target_dir(self):
@@ -33,16 +37,20 @@ class ProjectChecker:
         statuses: list = [report.module_status for report in self._reports]
         return Counter(statuses)
 
-    def docstring_check(self):
+    def docstring_check(
+        self,
+    ):
         for module in self.modules:
-            checker = DocstringChecker(module)
+            checker = DocstringChecker(module, doc_check=self.args.doc_modules)
             module_report = checker.check_module()
             if module_report is not None:
                 self._reports.append(module_report)
 
     def _scan_python_files(self) -> list[Path]:
         result: list[Path] = []
-        for file_path in self._target_dir.rglob("*.py"):
-            if not any(word in str(file_path) for word in self._excluded):
-                result.append(file_path)
-        return result
+        if self._target_dir:
+            for file_path in self._target_dir.rglob("*.py"):
+                if not any(word in str(file_path) for word in self._excluded):
+                    result.append(file_path)
+            return result
+        return []

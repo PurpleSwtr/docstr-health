@@ -9,9 +9,10 @@ from models.report import ModuleReport
 
 
 class DocstringChecker(BaseChecker):
-    def __init__(self, module: PythonModule) -> None:
+    def __init__(self, module: PythonModule, doc_check: bool = False) -> None:
         super().__init__(module)
         self.inspected_statuses = {"bad": 0, "good": 0, "special": 0, "epic": 0}
+        self.doc_check: bool = doc_check
 
     @property
     def total_inspected_statuses(self):
@@ -37,14 +38,14 @@ class DocstringChecker(BaseChecker):
             return None
 
         inspected_functions = [Text("Inspected:", justify="center")]
-
-        module_docstring = self.module.get_module_docstring()
-        module_status = self.check_docstring(module_docstring)
-        module_text = self.output.func_docstring_status(
-            func_name="__doc__",
-            status=module_status,
-        )
-        inspected_functions.append(module_text)
+        if self.doc_check:
+            module_docstring = self.module.get_module_docstring()
+            module_status = self.check_docstring(module_docstring)
+            module_text = self.output.func_docstring_status(
+                func_name="__doc__",
+                status=module_status,
+            )
+            inspected_functions.append(module_text)
 
         for func in self.module.functions_to_check:
             inspected_functions.append(self.get_func_status_text(func))
