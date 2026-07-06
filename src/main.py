@@ -25,14 +25,14 @@ def main():
 
     project_checker.docstring_check()
 
-    renderer = RichOutput()
-
     statuses = project_checker._get_statuses_stat()
 
     general_stat_data = project_checker.get_quantity_of_func_type()
     if args.doc_modules:
         general_stat_data["modules"] = project_checker._get_count_modules()
     general_stat_data["total"] = sum(general_stat_data.values())
+
+    renderer = RichOutput()
 
     table1 = renderer.get_table(
         title="General statistics",
@@ -42,12 +42,18 @@ def main():
         last_line_separator=True,
     )
     table2 = renderer.get_table(
-        title="Number of modules of each status",
+        title="Number of modules each status",
         headers=["Module status", "Quantity"],
         data=statuses,
         sorting_reference=config.get_sorted_statuses(),
     )
-    print(Columns([table1, table2]))
+
+    table3 = renderer.get_table(
+        title="Skipped modules",
+        headers=["Module", "Error"],
+        data=dict(project_checker.skipped_modules),
+    )
+    print(Columns([table1, table2, table3]))
     # python_functions = map(lambda x: get_functions(x), python_files)
 
     # for module in modules:

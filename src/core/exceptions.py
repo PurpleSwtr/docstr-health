@@ -1,3 +1,6 @@
+from pathlib import Path
+
+
 class GitNotInstalledError(Exception):
     def __init__(
         self,
@@ -8,3 +11,12 @@ class GitNotInstalledError(Exception):
 
     def __str__(self):
         return f"{self.message}"
+
+
+class PythonParseError(Exception):
+    """Raised when a Python file cannot be parsed."""
+
+    def __init__(self, file_path: Path, reason: Exception):
+        self.file_path = file_path
+        self.reason = reason
+        super().__init__(f"{file_path}: {reason}")

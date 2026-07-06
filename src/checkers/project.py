@@ -3,6 +3,7 @@ from collections import Counter
 from pathlib import Path
 
 from checkers.docstring import DocstringChecker
+from core.exceptions import PythonParseError
 from models.module import PythonModule
 from models.report import ModuleReport
 from sources.base import BaseSource
@@ -17,6 +18,7 @@ class ProjectChecker:
         self._python_files = self._scan_python_files()
         self.modules = [PythonModule(file_path=file) for file in self._python_files]
         self._reports: list[ModuleReport] = []
+        self._skipped_modules: list[tuple[Path, str]] = []
         self.args: Namespace = args
 
     @property
@@ -41,10 +43,17 @@ class ProjectChecker:
         self,
     ):
         for module in self.modules:
-            checker = DocstringChecker(module, doc_check=self.args.doc_modules)
-            module_report = checker.check_module()
-            if module_report is not None:
-                self._reports.append(module_report)
+            try:
+                checker = DocstringChecker(module, doc_check=self.args.doc_modules)
+                module_report = checker.check_module()
+                if module_report is not None:
+                    self._reports.append(module_report)
+            except PythonParseError as e:
+                self._skipped_modules.append((module.file_path, str(e)))
+
+    @property
+    def skipped_modules(self) -> list[tuple[Path, str]]:
+        return self._skipped_modules
 
     def _scan_python_files(self) -> list[Path]:
         result: list[Path] = []
