@@ -1,3 +1,5 @@
+import sys
+
 from rich import print
 from rich.columns import Columns
 
@@ -5,6 +7,7 @@ from checkers.project import ProjectChecker
 from cli.cli import RichOutput
 from cli.parser import get_parser
 from core.config import config
+from core.settings import AppSettings
 from sources.git_repo import GitRepositorySource
 from sources.local import LocalSource
 
@@ -12,16 +15,14 @@ from sources.local import LocalSource
 def main():
     parser = get_parser()
     args = parser.parse_args()
-
-    source = None
-    excluded = config.excluded
+    settings = AppSettings.from_args(args)
 
     if args.repo_url:
         source = GitRepositorySource(args.repo_url)
     else:
         source = LocalSource(args.project_path)
 
-    project_checker = ProjectChecker(source=source, excluded=excluded, args=args)
+    project_checker = ProjectChecker(source=source, settings=settings)
 
     project_checker.docstring_check()
 
@@ -72,4 +73,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

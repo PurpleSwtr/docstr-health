@@ -5,3 +5,4 @@ EXAMPLE.md
 ROADMAP.md
 .vscode
 *.log
+benchmarks/

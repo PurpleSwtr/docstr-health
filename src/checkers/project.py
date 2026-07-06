@@ -1,25 +1,22 @@
-from argparse import Namespace
 from collections import Counter
 from pathlib import Path
 
 from checkers.docstring import DocstringChecker
 from core.exceptions import PythonParseError
+from core.settings import AppSettings
 from models.module import PythonModule
 from models.report import ModuleReport
 from sources.base import BaseSource
 
 
 class ProjectChecker:
-    def __init__(
-        self, source: BaseSource, excluded: list[str], args: Namespace
-    ) -> None:
+    def __init__(self, source: BaseSource, settings: AppSettings) -> None:
         self.source: BaseSource = source
-        self._excluded = excluded
+        self.settings: AppSettings = settings
         self._python_files = self._scan_python_files()
         self.modules = [PythonModule(file_path=file) for file in self._python_files]
         self._reports: list[ModuleReport] = []
         self._skipped_modules: list[tuple[Path, str]] = []
-        self.args: Namespace = args
 
     @property
     def _target_dir(self):
@@ -44,7 +41,7 @@ class ProjectChecker:
     ):
         for module in self.modules:
             try:
-                checker = DocstringChecker(module, doc_check=self.args.doc_modules)
+                checker = DocstringChecker(module, settings=self.settings)
                 module_report = checker.check_module()
                 if module_report is not None:
                     self._reports.append(module_report)
@@ -59,7 +56,7 @@ class ProjectChecker:
         result: list[Path] = []
         if self._target_dir:
             for file_path in self._target_dir.rglob("*.py"):
-                if not any(word in str(file_path) for word in self._excluded):
+                if not any(word in str(file_path) for word in self.settings.excluded):
                     result.append(file_path)
             return result
         return []

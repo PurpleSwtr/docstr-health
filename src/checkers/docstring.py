@@ -3,16 +3,17 @@ from rich.text import Text
 from checkers.base import BaseChecker
 from core.config import config
 from core.enums import StatusDocstring
+from core.settings import AppSettings
 from models.function import PythonFunction
 from models.module import PythonModule
 from models.report import ModuleReport
 
 
 class DocstringChecker(BaseChecker):
-    def __init__(self, module: PythonModule, doc_check: bool = False) -> None:
+    def __init__(self, module: PythonModule, settings: AppSettings) -> None:
         super().__init__(module)
         self.inspected_statuses = {"bad": 0, "good": 0, "special": 0, "epic": 0}
-        self.doc_check: bool = doc_check
+        self.settings: AppSettings = settings
 
     @property
     def total_inspected_statuses(self):
@@ -37,39 +38,43 @@ class DocstringChecker(BaseChecker):
         if not self.module.functions_to_check:
             return None
 
-        inspected_functions = [Text("Inspected:", justify="center")]
-        if self.doc_check:
+        if self.settings.doc_check:
             module_docstring = self.module.get_module_docstring()
-            module_status = self.check_docstring(module_docstring)
-            module_text = self.output.func_docstring_status(
-                func_name="__doc__",
-                status=module_status,
-            )
-            inspected_functions.append(module_text)
+            self.check_docstring(module_docstring)
 
         for func in self.module.functions_to_check:
-            inspected_functions.append(self.get_func_status_text(func))
+            self.inspect_func_status(func)
 
-        panel_status = self.module_status
+        if not self.settings.compact:
+            self._display()
 
-        statistics = self.get_statistics()
-        content = []
-
-        content.append(inspected_functions)
-        content.append(statistics)
-
-        self.output.display_panel(
-            text=content,
-            title=str(self.module),
-            panel_status=panel_status,
-        )
-
-        mr = ModuleReport(
+        return ModuleReport(
             module_status=self.module_status,
             inspected_functions=self.module.functions_to_check,
         )
-        # mr.p_inspected_functions()
-        return mr
+
+    def _display(self):
+        inspected = [Text("Inspected:", justify="center")]
+
+        if self.settings.doc_check:
+            module_docstring = self.module.get_module_docstring()
+            module_status = self.check_docstring(module_docstring)
+            inspected.append(
+                self.output.func_docstring_status(
+                    func_name="__doc__",
+                    status=module_status,
+                )
+            )
+
+        for func in self.module.functions_to_check:
+            inspected.append(self.get_func_status_text(func))
+
+        statistics = self.get_statistics()
+        self.output.display_panel(
+            text=[inspected, statistics],
+            title=str(self.module),
+            panel_status=self.module_status,
+        )
 
     @property
     def module_status(self) -> str:
