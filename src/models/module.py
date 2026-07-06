@@ -18,10 +18,13 @@ class PythonModule:
         """Lazy loading ast-tree"""
         if self._tree is None:
             try:
-                self._tree = ast.parse(self.file_path.read_text(encoding="utf-8"))
+                self._tree = ast.parse(
+                    self.file_path.read_text(encoding="utf-8"),
+                    filename=str(self.file_path),
+                )
             except Exception as e:
-                self._parse_error = PythonParseError(self.file_path, e)
                 logger.warning(self.parse_error)
+                raise PythonParseError(self.file_path, e)
         return self._tree
 
     @property

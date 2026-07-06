@@ -1,5 +1,4 @@
 import tomllib
-from argparse import Namespace
 from pathlib import Path
 
 _ROOT: Path = Path(__file__).resolve().parent.parent.parent

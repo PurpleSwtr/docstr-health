@@ -35,26 +35,37 @@ def main():
 
     renderer = RichOutput()
 
-    table1 = renderer.get_table(
-        title="General statistics",
-        headers=["Metric", "Value"],
-        data=general_stat_data,
-        sorting_reference=config.get_sorted_general_stat(),
-        last_line_separator=True,
+    tables_to_display = []
+
+    tables_to_display.append(
+        renderer.get_table(
+            title="General statistics",
+            headers=["Metric", "Value"],
+            data=general_stat_data,
+            sorting_reference=config.get_sorted_general_stat(),
+            last_line_separator=True,
+        )
     )
-    table2 = renderer.get_table(
-        title="Number of modules each status",
-        headers=["Module status", "Quantity"],
-        data=statuses,
-        sorting_reference=config.get_sorted_statuses(),
+    tables_to_display.append(
+        renderer.get_table(
+            title="Number of modules each status",
+            headers=["Module status", "Quantity"],
+            data=statuses,
+            sorting_reference=config.get_sorted_statuses(),
+        )
     )
 
-    table3 = renderer.get_table(
-        title="Skipped modules",
-        headers=["Module", "Error"],
-        data=dict(project_checker.skipped_modules),
-    )
-    print(Columns([table1, table2, table3]))
+    skipped = {p.name: e for p, e in project_checker.skipped_modules}
+    if skipped:
+        tables_to_display.append(
+            renderer.get_table(
+                title="Skipped modules",
+                headers=["Module", "Error"],
+                data=skipped,
+            )
+        )
+
+    print(Columns(tables_to_display))
     # python_functions = map(lambda x: get_functions(x), python_files)
 
     # for module in modules:

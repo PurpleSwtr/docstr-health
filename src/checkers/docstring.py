@@ -12,7 +12,13 @@ from models.report import ModuleReport
 class DocstringChecker(BaseChecker):
     def __init__(self, module: PythonModule, settings: AppSettings) -> None:
         super().__init__(module)
-        self.inspected_statuses = {"bad": 0, "good": 0, "special": 0, "epic": 0}
+        self.inspected_statuses = {
+            "bad": 0,
+            "good": 0,
+            "special": 0,
+            "epic": 0,
+            "skipped": 0,
+        }
         self.settings: AppSettings = settings
 
     @property
