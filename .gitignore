@@ -7,3 +7,5 @@ ROADMAP.md
 *.log
 benchmarks/
 sampling/
+*.tape
+*.gif

@@ -1,5 +1,6 @@
 from collections import Counter
 from pathlib import Path
+from typing import Generator
 
 from checkers.docstring import DocstringChecker
 from core.exceptions import PythonParseError
@@ -38,7 +39,7 @@ class ProjectChecker:
 
     def docstring_check(
         self,
-    ):
+    ) -> Generator[PythonModule]:
         for module in self.modules:
             try:
                 checker = DocstringChecker(module, settings=self.settings)
@@ -52,7 +53,7 @@ class ProjectChecker:
             except PythonParseError as e:
                 self._skipped_modules.append((module.file_path, str(e)))
 
-            module._tree = None
+            yield module
 
     @property
     def skipped_modules(self) -> list[tuple[Path, str]]:

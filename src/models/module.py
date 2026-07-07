@@ -11,7 +11,6 @@ class PythonModule:
     def __init__(self, file_path: Path):
         self.file_path = file_path
         self._tree: ast.Module | None = None
-        self._parse_error: PythonParseError | None = None
 
     @property
     def tree(self) -> ast.Module | None:
@@ -23,13 +22,9 @@ class PythonModule:
                     filename=str(self.file_path),
                 )
             except Exception as e:
-                logger.warning(self.parse_error)
+                logger.debug(e)
                 raise PythonParseError(self.file_path, e)
         return self._tree
-
-    @property
-    def parse_error(self) -> PythonParseError | None:
-        return self._parse_error
 
     @property
     def functions(self) -> list[PythonFunction]:

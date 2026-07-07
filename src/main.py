@@ -1,15 +1,23 @@
 import sys
+from contextlib import contextmanager
 
-from rich import print
+from rich import print as rich_print
 from rich.columns import Columns
 
 from checkers.project import ProjectChecker
 from cli.cli import RichOutput
 from cli.parser import get_parser
+from cli.progress_bar import progress_bar
 from core.config import config
 from core.settings import AppSettings
 from sources.git_repo import GitRepositorySource
 from sources.local import LocalSource
+
+
+@contextmanager
+def spacing():
+    print()
+    yield
 
 
 def main():
@@ -24,7 +32,20 @@ def main():
 
     project_checker = ProjectChecker(source=source, settings=settings)
 
-    project_checker.docstring_check()
+    if project_checker.modules:
+        start_module_name = project_checker.modules[0].file_path.name
+    else:
+        start_module_name = "No modules found"
+
+    with progress_bar() as pg:
+        _task = pg.add_task(
+            "Checking...",
+            total=len(project_checker.modules),
+            module_name=start_module_name,
+        )
+
+        for task in project_checker.docstring_check():
+            pg.update(_task, advance=1, module_name=task.file_path.name)
 
     statuses = project_checker._get_statuses_stat()
 
@@ -65,7 +86,8 @@ def main():
             )
         )
 
-    print(Columns(tables_to_display))
+    rich_print(Columns(tables_to_display))
+
     # python_functions = map(lambda x: get_functions(x), python_files)
 
     # for module in modules:
@@ -84,4 +106,5 @@ def main():
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    with spacing():
+        sys.exit(main())
