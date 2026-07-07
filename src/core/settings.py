@@ -8,12 +8,14 @@ class AppSettings:
         self,
         doc_check: bool = False,
         compact: bool = False,
+        ignore_tests: bool = False,
         repo_url: str | None = None,
         cache_dir: str | None = None,
         excluded: list[str] | None = None,
     ) -> None:
         self.doc_check = doc_check
         self.compact = compact
+        self.ignore_tests = ignore_tests
         self.repo_url = repo_url
         self.cache_dir = cache_dir or config.get_cache_dir()
         self.excluded = excluded or config.excluded
@@ -24,4 +26,5 @@ class AppSettings:
             doc_check=args.doc_modules,
             compact=args.compact,
             repo_url=args.repo_url,
+            ignore_tests=args.ignore_tests,
         )

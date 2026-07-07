@@ -63,7 +63,17 @@ class ProjectChecker:
         result: list[Path] = []
         if self._target_dir:
             for file_path in self._target_dir.rglob("*.py"):
-                if not any(word in str(file_path) for word in self.settings.excluded):
+                file_name = file_path.name.lower()
+                path_str = str(file_path).lower()
+                if self.settings.ignore_tests:
+                    self.settings.excluded.append("test_")
+                excluded = [word.lower() for word in self.settings.excluded]
+
+                is_excluded = any(
+                    file_name.startswith(excl) or excl in path_str for excl in excluded
+                )
+
+                if not is_excluded:
                     result.append(file_path)
             return result
         return []

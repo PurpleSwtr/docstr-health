@@ -42,6 +42,12 @@ def get_parser():
         help=f"Directory for cached repositories (default: {config.get_cache_dir()})",
     )
 
+    parser.add_argument(
+        "--ignore-tests",
+        action="store_true",
+        help="Ignore Test Units",
+    )
+
     # parser.add_argument(
     #     "--details-skipped",
     # )
