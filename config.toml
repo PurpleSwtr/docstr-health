@@ -1,5 +1,7 @@
 [user_parameters]
-debug = false
+debug = true
+use_uv = true
+
 excluded = [".venv", "__init__", "__pycache__"]
 excluded_functions = ["wrapper"]
 

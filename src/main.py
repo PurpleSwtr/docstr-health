@@ -1,5 +1,6 @@
 import sys
 from contextlib import contextmanager
+from venv import logger
 
 from rich import print as rich_print
 from rich.columns import Columns
@@ -10,8 +11,7 @@ from cli.parser import get_parser
 from cli.progress_bar import progress_bar
 from core.config import config
 from core.settings import AppSettings
-from sources.git_repo import GitRepositorySource
-from sources.local import LocalSource
+from sources import get_repository_source
 
 
 @contextmanager
@@ -25,10 +25,9 @@ def main():
     args = parser.parse_args()
     settings = AppSettings.from_args(args)
 
-    if args.repo_url:
-        source = GitRepositorySource(args.repo_url)
-    else:
-        source = LocalSource(args.project_path)
+    logger.debug(config.get_cache_dir())
+
+    source = get_repository_source(settings, args)
 
     project_checker = ProjectChecker(source=source, settings=settings)
 

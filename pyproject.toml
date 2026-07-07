@@ -1,9 +1,13 @@
 [project]
-name = "docstring-test-checker"
-version = "0.1.1"
+name = "docstring-checker"
+version = "0.1.2"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "uv>=0.11.27",
     "rich>=15.0.0",
 ]
+
+[project.scripts]
+docstring-checker = "src.main:main"

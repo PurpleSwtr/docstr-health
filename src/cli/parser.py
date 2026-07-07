@@ -30,7 +30,13 @@ def get_parser():
     main_group.add_argument(
         "--repo-url",
         type=str,
-        help="Просканировать проект из удалённого репозитория.",
+        help="Просканировать проект из удалённого Git репозитория.",
+    )
+
+    main_group.add_argument(
+        "--pypi-url",
+        type=str,
+        help="Просканировать проект из удалённого PyPi пакета.",
     )
 
     main_group.add_argument(
