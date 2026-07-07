@@ -5,6 +5,7 @@ _ROOT: Path = Path(__file__).resolve().parent.parent.parent
 _BASE_CACHE_DIR = Path.home() / ".cache" / "docstring-test-checker"
 _REPOS_DIR = _BASE_CACHE_DIR / "repos"
 _LOGS_DIR = _BASE_CACHE_DIR / "logs"
+_PYPROJECT_DIR = _ROOT / "pyproject.toml"
 
 
 class Config:
@@ -22,6 +23,12 @@ class Config:
     @staticmethod
     def get_sorted_statuses() -> list[str]:
         return ["bad", "warning", "good", "special", "epic"]
+
+    @staticmethod
+    def get_version() -> str:
+        with open(_PYPROJECT_DIR, "rb") as f:
+            data = tomllib.load(f)
+        return data.get("project", {}).get("version")
 
     @staticmethod
     def get_sorted_general_stat() -> list[str]:
