@@ -47,6 +47,12 @@ def get_parser():
     )
 
     parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Не сохранять кеш для удалённых репозиториев.",
+    )
+
+    parser.add_argument(
         "--compact",
         action="store_true",
         help="Выводить только общую статистику, скрывая список функций.",

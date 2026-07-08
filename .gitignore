@@ -10,3 +10,4 @@ sampling/
 *.tape
 *.gif
 storybook/
+views/

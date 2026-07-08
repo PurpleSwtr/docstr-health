@@ -16,3 +16,14 @@ class BaseSource(ABC):
     def cleanup(self) -> None:
         """Cleans up temporary files (if any)."""
         ...
+
+    # def __init__(self) -> None:
+    #     super().__init__()
+    #     self._temp_dir_obj = tempfile.mkdtemp()
+
+    # def __enter__(self):
+
+    #     return self
+
+    # def __exit__(self):
+    #     pass

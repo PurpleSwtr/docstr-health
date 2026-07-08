@@ -4,6 +4,7 @@ from pathlib import Path
 
 from core.config import config
 from core.exceptions import GitNotInstalledError
+from core.logger import logger
 from sources.base import BaseSource
 
 
@@ -51,4 +52,13 @@ class GitRepositorySource(BaseSource):
             return cached
         return self.get_from_repo()
 
-    def cleanup(self) -> None: ...
+    def cleanup(self) -> None:
+        base = config.get_cache_dir()
+        try:
+            self.cache_path.relative_to(base)
+        except ValueError as e:
+            logger.warning(e)
+            return
+
+        if not self.cache_path.is_dir():
+            return

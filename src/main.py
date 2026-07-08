@@ -87,6 +87,9 @@ def main():
 
     rich_print(Columns(tables_to_display))
 
+    if settings.no_cache:
+        source.cleanup()
+
     # python_functions = map(lambda x: get_functions(x), python_files)
 
     # for module in modules:
