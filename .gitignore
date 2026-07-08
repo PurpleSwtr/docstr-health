@@ -11,3 +11,5 @@ sampling/
 *.gif
 storybook/
 views/
+dist/
+build/

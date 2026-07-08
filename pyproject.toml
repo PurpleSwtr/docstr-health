@@ -1,13 +1,42 @@
 [project]
-name = "docstring-checker"
-version = "0.1.2"
-description = "Add your description here"
+name = "docstr-health"
+version = "0.1.0"
+description = "Health score and visualization for Python projects"
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+
+authors = [
+    { name = "Mihail Sergeenko" },
+]
+maintainers = [
+    { name = "Mihail Sergeenko" },
+]
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Developers",
+    "Environment :: Console",
+    "License :: OSI Approved :: Apache Software License",
+]
+
 dependencies = [
-    "uv>=0.11.27",
     "rich>=15.0.0",
 ]
 
 [project.scripts]
-docstring-checker = "src.main:main"
+docstr-health = "docstr_health.main:main"   
+
+[project.urls]
+Homepage = "https://github.com/PurpleSwtr/docstr-health"
+Repository = "https://github.com/PurpleSwtr/docstr-health.git"
+
+[build-system]
+requires = ["uv_build >= 0.11.23, <0.12.0"]
+build-backend = "uv_build"
+
+[tool.uv]
+package = true
+
+[tool.uv.build-backend]
+module-root = ""

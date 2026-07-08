@@ -14,10 +14,13 @@ class PyPiPackageSource(BaseSource):
         self._package_url = package_url
 
     def get_download_method(self) -> list[str]:
-        if config.parameters["use_uv"]:
+        if config.parameters["use_uv"] and shutil.which("uv"):
             return ["uv", "pip", "install"]
-        else:
-            return ["pip", "install"]
+
+        if config.parameters["use_uv"]:
+            logger.warning("uv not found, falling back to pip")
+
+        return ["pip", "install"]
 
     @property
     def cache_path(self) -> Path:
