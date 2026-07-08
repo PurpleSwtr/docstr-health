@@ -3,7 +3,7 @@ from __future__ import annotations
 from argparse import Namespace
 from pathlib import Path
 
-from core.config import config
+from ..core.config import config
 
 
 class AppSettings:

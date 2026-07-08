@@ -2,12 +2,12 @@ from collections import Counter
 from pathlib import Path
 from typing import Generator
 
-from checkers.docstring import DocstringChecker
-from core.exceptions import PythonParseError
-from core.settings import AppSettings
-from models.module import PythonModule
-from models.report import ModuleReport
-from sources.base import BaseSource
+from ..checkers.docstring import DocstringChecker
+from ..core.exceptions import PythonParseError
+from ..core.settings import AppSettings
+from ..models.module import PythonModule
+from ..models.report import ModuleReport
+from ..sources.base import BaseSource
 
 
 class ProjectChecker:

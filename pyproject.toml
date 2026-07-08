@@ -40,3 +40,4 @@ package = true
 
 [tool.uv.build-backend]
 module-root = ""
+source-include = ["docstr_health/config.toml"]

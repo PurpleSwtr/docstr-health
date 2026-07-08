@@ -2,10 +2,10 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from core.config import config
-from core.exceptions import GitNotInstalledError
-from core.logger import logger
-from sources.base import BaseSource
+from ..core.config import config
+from ..core.exceptions import GitNotInstalledError
+from ..core.logger import logger
+from ..sources.base import BaseSource
 
 
 class GitRepositorySource(BaseSource):

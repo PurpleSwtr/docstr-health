@@ -1,8 +1,8 @@
 import argparse
 from pathlib import Path
 
-from core import __version__
-from core.config import config
+from ..core import __version__
+from ..core.config import config
 
 
 def get_parser():

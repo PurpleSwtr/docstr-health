@@ -1,6 +1,6 @@
 import ast
 
-from models.function import PythonFunction
+from ..models.function import PythonFunction
 
 
 class ModuleReport:

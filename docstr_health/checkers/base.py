@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-from cli.cli import RichOutput
-from models.module import PythonModule
-from models.report import ModuleReport
+from ..cli.cli import RichOutput
+from ..models.module import PythonModule
+from ..models.report import ModuleReport
 
 
 class BaseChecker(ABC):

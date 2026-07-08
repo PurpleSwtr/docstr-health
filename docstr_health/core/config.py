@@ -1,11 +1,12 @@
 import tomllib
 from pathlib import Path
+from importlib import metadata
 
-_ROOT: Path = Path(__file__).resolve().parent.parent.parent
+_PACKAGE_ROOT: Path = Path(__file__).resolve().parent.parent
+
 _BASE_CACHE_DIR = Path.home() / ".cache" / "docstring-test-checker"
 _REPOS_DIR = _BASE_CACHE_DIR / "repos"
 _LOGS_DIR = _BASE_CACHE_DIR / "logs"
-_PYPROJECT_DIR = _ROOT / "pyproject.toml"
 
 
 class Config:
@@ -29,9 +30,15 @@ class Config:
 
     @staticmethod
     def get_version() -> str:
-        with open(_PYPROJECT_DIR, "rb") as f:
-            data = tomllib.load(f)
-        return data.get("project", {}).get("version")
+        try:
+            return metadata.version("docstr-health")
+        except metadata.PackageNotFoundError:
+            pyproject_path = _PACKAGE_ROOT.parent / "pyproject.toml"
+            if pyproject_path.exists():
+                with open(pyproject_path, "rb") as f:
+                    data = tomllib.load(f)
+                return data.get("project", {}).get("version", "unknown")
+            return "unknown"
 
     @staticmethod
     def get_sorted_general_stat() -> list[str]:
@@ -48,14 +55,12 @@ class Config:
         """
         Основной интерфейс для получения данных из конфигурации.
         """
-        with open(_ROOT / "config.toml", "rb") as f:
+        config_path = _PACKAGE_ROOT / "config.toml"
+        with open(config_path, "rb") as f:
             return tomllib.load(f)
 
     @property
     def requires(self) -> dict:
-        """
-        Свойство требований для получения функциями особых статусов
-        """
         return self.data.get("requires_v3", {})
 
     @property
@@ -63,13 +68,9 @@ class Config:
         return self.data.get("user_parameters", {})
 
     def ensure_directories(self) -> None:
-        """
-        Создает все необходимые директории для работы приложения.
-        """
         self.get_cache_dir().mkdir(parents=True, exist_ok=True)
         self.get_logs_dir().mkdir(parents=True, exist_ok=True)
 
 
 config = Config()
-
 config.ensure_directories()

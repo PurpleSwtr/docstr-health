@@ -1,12 +1,12 @@
 from rich.text import Text
 
-from checkers.base import BaseChecker
-from core.config import config
-from core.enums import StatusDocstring
-from core.settings import AppSettings
-from models.function import PythonFunction
-from models.module import PythonModule
-from models.report import ModuleReport
+from ..checkers.base import BaseChecker
+from ..core.config import config
+from ..core.enums import StatusDocstring
+from ..core.settings import AppSettings
+from ..models.function import PythonFunction
+from ..models.module import PythonModule
+from ..models.report import ModuleReport
 
 
 class DocstringChecker(BaseChecker):

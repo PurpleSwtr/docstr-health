@@ -1,7 +1,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
 
-from core.config import config
+from ..core.config import config
 
 handler = RotatingFileHandler(
     config.get_logs_dir() / "app.log", maxBytes=1000000, backupCount=5, encoding="utf-8"

@@ -5,8 +5,8 @@ from rich.rule import Rule
 from rich.table import Table
 from rich.text import Text
 
-from core.config import config
-from core.enums import StatusDocstring
+from ..core.config import config
+from ..core.enums import StatusDocstring
 
 
 class RichOutput:

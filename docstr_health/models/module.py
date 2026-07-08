@@ -1,10 +1,10 @@
 import ast
 from pathlib import Path
 
-from core.config import config
-from core.exceptions import PythonParseError
-from core.logger import logger
-from models.function import PythonFunction
+from ..core.config import config
+from ..core.exceptions import PythonParseError
+from ..core.logger import logger
+from ..models.function import PythonFunction
 
 
 class PythonModule:

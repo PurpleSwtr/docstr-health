@@ -1,5 +1,5 @@
 [user_parameters]
-debug = true
+debug = false
 use_uv = true
 
 excluded = [".venv", "__init__", "__pycache__"]

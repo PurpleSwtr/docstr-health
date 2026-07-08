@@ -1,16 +1,17 @@
 import sys
 from contextlib import contextmanager
-from venv import logger
 
-from checkers.project import ProjectChecker
-from cli.cli import RichOutput
-from cli.parser import get_parser
-from cli.progress_bar import progress_bar
-from core.config import config
-from core.settings import AppSettings
 from rich import print as rich_print
 from rich.columns import Columns
-from sources import get_repository_source
+
+from .checkers.project import ProjectChecker
+from .cli.cli import RichOutput
+from .cli.parser import get_parser
+from .cli.progress_bar import progress_bar
+from .core.config import config
+from .core.logger import logger
+from .core.settings import AppSettings
+from .sources import get_repository_source
 
 
 @contextmanager
