@@ -7,14 +7,14 @@ from core.config import config
 
 def get_parser():
     parser = argparse.ArgumentParser(
-        prog="PyCoverageAnalyzer", description="Проверка docstring и тестов."
+        prog="docstr-health", description="Проверка docstring и тестов."
     )
 
     parser.add_argument(
         "project_path",
         type=Path,
         nargs="?",
-        default=".",
+        default=Path("."),
         help="Путь к директории для проверки",
     )
 

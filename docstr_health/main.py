@@ -2,15 +2,14 @@ import sys
 from contextlib import contextmanager
 from venv import logger
 
-from rich import print as rich_print
-from rich.columns import Columns
-
 from checkers.project import ProjectChecker
 from cli.cli import RichOutput
 from cli.parser import get_parser
 from cli.progress_bar import progress_bar
 from core.config import config
 from core.settings import AppSettings
+from rich import print as rich_print
+from rich.columns import Columns
 from sources import get_repository_source
 
 
@@ -23,7 +22,16 @@ def spacing():
 def main():
     parser = get_parser()
     args = parser.parse_args()
+
+    if args.project_path:
+        args.project_path = args.project_path.resolve()
+    if args.cache_dir:
+        args.cache_dir = args.cache_dir.resolve()
+
     settings = AppSettings.from_args(args)
+
+    if settings.cache_dir:
+        config.set_cache_dir(settings.cache_dir)
 
     logger.debug(config.get_cache_dir())
 
@@ -89,22 +97,6 @@ def main():
 
     if settings.no_cache:
         source.cleanup()
-
-    # python_functions = map(lambda x: get_functions(x), python_files)
-
-    # for module in modules:
-    #     checker = TypeChecker(module)
-    #     for func in module.functions_to_check:
-    #         checker.inspect_func_type_checking(func=func)
-    # print(f"{func.name} - {func.size}")
-
-    # print(modules[0].get_functions_size())
-    # print(
-    #     f"Найдено: {len(all_functions_checked)} функций: {', '.join(func.name for func in all_functions_checked)}"
-    # )
-    # print(
-    #     f"Докстринги написаны для: {sum(func.has_docstring for func in all_functions_checked)}/{len(all_functions_checked)}"
-    # )
 
 
 if __name__ == "__main__":

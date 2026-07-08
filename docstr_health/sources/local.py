@@ -7,7 +7,7 @@ class LocalSource(BaseSource):
     """Local directory."""
 
     def __init__(self, path: Path) -> None:
-        self._path = path
+        self._path = path.resolve()
 
     def get_path(self) -> Path:
         if not self._path.exists():

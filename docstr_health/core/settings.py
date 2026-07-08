@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 from argparse import Namespace
+from pathlib import Path
 
 from core.config import config
 
@@ -12,7 +15,7 @@ class AppSettings:
         ignore_tests: bool = False,
         repo_url: str | None = None,
         pypi_url: str | None = None,
-        cache_dir: str | None = None,
+        cache_dir: Path | None = None,
         excluded: list[str] | None = None,
     ) -> None:
         self.doc_check = doc_check
@@ -24,6 +27,9 @@ class AppSettings:
         self.cache_dir = cache_dir or config.get_cache_dir()
         self.excluded = excluded or config.excluded
 
+    # @staticmethod
+    # def
+
     @classmethod
     def from_args(cls, args: Namespace) -> AppSettings:
         return cls(
@@ -32,5 +38,6 @@ class AppSettings:
             no_cache=args.no_cache,
             repo_url=args.repo_url,
             pypi_url=args.pypi_url,
+            cache_dir=args.cache_dir,
             ignore_tests=args.ignore_tests,
         )

@@ -11,10 +11,13 @@ _PYPROJECT_DIR = _ROOT / "pyproject.toml"
 class Config:
     def __init__(self) -> None:
         self.excluded = self.parameters.get("excluded", [])
+        self._cache_dir = _REPOS_DIR
 
-    @staticmethod
-    def get_cache_dir() -> Path:
-        return _REPOS_DIR
+    def get_cache_dir(self) -> Path:
+        return Path(self._cache_dir)
+
+    def set_cache_dir(self, dir: Path) -> None:
+        self._cache_dir = dir
 
     @staticmethod
     def get_logs_dir() -> Path:
