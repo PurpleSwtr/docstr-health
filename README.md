@@ -182,7 +182,7 @@ docstr-health --doc-modules
 | Status    | Symbol | Meaning                                                      |
 | --------- | ------ | ------------------------------------------------------------ |
 | `bad`     | ✗      | Missing or empty docstring                                   |
-| `good`    | ✔      | Docstring exists but only has a description                  |
+| `good`    | ✓      | Docstring exists but only has a description                  |
 | `special` | ★      | Contains parameter docs (`Args:`,`:param`, `Returns:`, etc.) |
 | `epic`    | ♥      | Contains advanced sections (`Raises:`, `Examples:`)          |
 
