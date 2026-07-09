@@ -13,13 +13,17 @@ maintainers = [
     { name = "Mihail Sergeenko" },
 ]
 
-keywords = ["docstring", "health", "quality",]
+keywords = [
+    "docstring", "documentation", "code-quality", "pep257",
+    "linter", "cli", "analysis", "coverage",
+]
 
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Quality Assurance",
     "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Utilities",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
@@ -30,6 +34,13 @@ classifiers = [
     "Environment :: Console",
     "License :: OSI Approved :: Apache Software License",
 ]
+
+[project.urls]
+Homepage = "https://github.com/PurpleSwtr/docstr-health"
+Repository = "https://github.com/PurpleSwtr/docstr-health.git"
+Documentation = "https://github.com/PurpleSwtr/docstr-health#readme"
+Issues = "https://github.com/PurpleSwtr/docstr-health/issues"
+Changelog = "https://github.com/PurpleSwtr/docstr-health/blob/main/CHANGELOG.md"
 
 dependencies = [
     "rich>=15.0.0",

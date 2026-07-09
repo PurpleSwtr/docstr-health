@@ -1,6 +1,7 @@
-import tomllib
 from importlib import metadata
 from pathlib import Path
+
+import tomllib
 
 _PACKAGE_ROOT: Path = Path(__file__).resolve().parent.parent
 
@@ -52,9 +53,7 @@ class Config:
 
     @property
     def data(self) -> dict:
-        """
-        Основной интерфейс для получения данных из конфигурации.
-        """
+        """The main interface for obtaining data from the configuration."""
         config_path = _PACKAGE_ROOT / "config.toml"
         with open(config_path, "rb") as f:
             return tomllib.load(f)

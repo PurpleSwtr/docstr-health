@@ -85,14 +85,14 @@ class DocstringChecker(BaseChecker):
     @property
     def module_status(self) -> str:
         """
-        Статус по модулю рассчитывается по следующей схеме:
-        Все bad -> bad
-        Есть bad (но не все) -> warning
-        Нет bad + epic > 50% -> epic
-        Нет bad + special > 50% -> special
-        Нет bad и редкостей мало -> good
+        Module status is calculated as follows:
+        All bad                     -> bad
+        Some bad (not all)          -> warning
+        No bad + epic > 50%         -> epic
+        No bad + special > 50%      -> special
+        No bad, few special/epic    -> good
 
-        Округление в меньшую сторону в случае равенства special и epic.
+        Rounds down when special and epic are tied.
         """
         total = self.total_inspected_statuses
         statuses = self.inspected_statuses

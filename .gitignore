@@ -15,3 +15,5 @@ TODO.md
 views/
 dist/
 build/
+.env
+.python-version
