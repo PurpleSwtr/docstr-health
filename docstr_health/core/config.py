@@ -1,6 +1,6 @@
 import tomllib
-from pathlib import Path
 from importlib import metadata
+from pathlib import Path
 
 _PACKAGE_ROOT: Path = Path(__file__).resolve().parent.parent
 
@@ -61,7 +61,7 @@ class Config:
 
     @property
     def requires(self) -> dict:
-        return self.data.get("requires_v3", {})
+        return self.data.get("requires_v4", {})
 
     @property
     def parameters(self) -> dict:
@@ -73,4 +73,3 @@ class Config:
 
 
 config = Config()
-config.ensure_directories()

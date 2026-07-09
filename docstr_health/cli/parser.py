@@ -7,7 +7,8 @@ from ..core.config import config
 
 def get_parser():
     parser = argparse.ArgumentParser(
-        prog="docstr-health", description="Проверка docstring и тестов."
+        prog="docstr-health",
+        description="Health score and visualization for Python projects.",
     )
 
     parser.add_argument(
@@ -15,7 +16,7 @@ def get_parser():
         type=Path,
         nargs="?",
         default=Path("."),
-        help="Путь к директории для проверки",
+        help="Path to the directory to check.",
     )
 
     parser.add_argument(
@@ -30,13 +31,13 @@ def get_parser():
     main_group.add_argument(
         "--repo-url",
         type=str,
-        help="Просканировать проект из удалённого Git репозитория.",
+        help="Scan a project from a remote Git repository.",
     )
 
     main_group.add_argument(
-        "--pypi-url",
+        "--pypi-package",
         type=str,
-        help="Просканировать проект из удалённого PyPi пакета.",
+        help="Scan a project from a remote PyPi package.",
     )
 
     main_group.add_argument(
@@ -49,19 +50,19 @@ def get_parser():
     parser.add_argument(
         "--no-cache",
         action="store_true",
-        help="Не сохранять кеш для удалённых репозиториев.",
+        help="Do not save cache for remote repositories.",
     )
 
     parser.add_argument(
         "--compact",
         action="store_true",
-        help="Выводить только общую статистику, скрывая список функций.",
+        help="Display only general statistics, hiding the list of functions.",
     )
 
     parser.add_argument(
         "--doc-modules",
         action="store_true",
-        help="Учитывать __doc__ самих файлов",
+        help="Check __doc__ of the files themselves",
     )
 
     parser.add_argument(

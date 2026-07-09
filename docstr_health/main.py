@@ -29,6 +29,7 @@ def main():
     if args.cache_dir:
         args.cache_dir = args.cache_dir.resolve()
 
+    config.ensure_directories()
     settings = AppSettings.from_args(args)
 
     if settings.cache_dir:
@@ -55,11 +56,11 @@ def main():
         for task in project_checker.docstring_check():
             pg.update(_task, advance=1, module_name=task.file_path.name)
 
-    statuses = project_checker._get_statuses_stat()
+    statuses = project_checker.get_statuses_stat()
 
     general_stat_data = project_checker.get_quantity_of_func_type()
     if args.doc_modules:
-        general_stat_data["modules"] = project_checker._get_count_modules()
+        general_stat_data["modules"] = project_checker.get_count_modules()
     general_stat_data["total"] = sum(general_stat_data.values())
 
     renderer = RichOutput()

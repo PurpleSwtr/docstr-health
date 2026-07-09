@@ -58,6 +58,7 @@ class PythonModule:
         """Returns self docstring of module"""
         if self.tree:
             return ast.get_docstring(self.tree)
+        return None
 
     def get_functions_size(self) -> dict[str, int]:
         return {func.name: func.size for func in self.functions}

@@ -30,10 +30,10 @@ class ProjectChecker:
         total_counter = sum(counters, Counter())
         return dict(total_counter)
 
-    def _get_count_modules(self) -> int:
+    def get_count_modules(self) -> int:
         return len(self._reports)
 
-    def _get_statuses_stat(self) -> Counter:
+    def get_statuses_stat(self) -> Counter:
         statuses: list = [report.module_status for report in self._reports]
         return Counter(statuses)
 

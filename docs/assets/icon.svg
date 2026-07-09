@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#25354f"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="16" y="16" width="224" height="224" rx="44" fill="url(#bg)" stroke="#3b82f6" stroke-width="8"/>
+
+  <!-- Центральный документ (уменьшен) -->
+  <g transform="translate(128, 128)"> 
+    <!-- 1. Сначала рисуем треугольник (теперь он на заднем плане) -->
+    <path d="M 28,-52 L 28,-36 L 44,-36 Z" fill="#3b82f6" opacity="0.35" transform="translate(-4, 4)"/> 
+
+    <!-- 2. Затем рисуем контур рамки (он перекроет край треугольника) -->
+    <path d="M -44,-52 L 28,-52 Q 44,-52 44,-36 L 44,52 L -44,52 Z" fill="none" stroke="#7dd3fc" stroke-width="8" stroke-linejoin="round"/> 
+
+    <!-- 3. Текст остается поверх всего -->
+    <text x="0" y="16" font-family="'Courier New', monospace" font-size="38" fill="#7dd3fc" text-anchor="middle" font-weight="bold">"""</text> 
+  </g>
+
+
+  <!-- 8 иконок по кругу (радиус 100px, каждые 45°) -->
+  
+  <!-- Верх (0°) -->
+  <g transform="translate(128, 40)">
+    <polyline points="-9,0 -3,8 9,-8" fill="none" stroke="#4ade80" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Верхний правый (45°) -->
+  <g transform="translate(199, 57)">
+    <line x1="-8" y1="-8" x2="8" y2="8" stroke="#f87171" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="8" y1="-8" x2="-8" y2="8" stroke="#f87171" stroke-width="5.5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Право (90°) -->
+  <g transform="translate(216, 128)">
+    <line x1="0" y1="-12" x2="0" y2="8" stroke="#fbbf24" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="0" cy="15" r="3.5" fill="#fbbf24"/>
+  </g>
+  
+  <!-- Нижний правый (135°) -->
+  <g transform="translate(199, 199)">
+    <polyline points="-9,0 -3,8 9,-8" fill="none" stroke="#4ade80" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Низ (180°) -->
+  <g transform="translate(128, 216)">
+    <line x1="-8" y1="-8" x2="8" y2="8" stroke="#f87171" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="8" y1="-8" x2="-8" y2="8" stroke="#f87171" stroke-width="5.5" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Нижний левый (225°) -->
+  <g transform="translate(57, 199)">
+    <line x1="0" y1="-12" x2="0" y2="8" stroke="#fbbf24" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="0" cy="15" r="3.5" fill="#fbbf24"/>
+  </g>
+  
+  <!-- Лево (270°) -->
+  <g transform="translate(40, 128)">
+    <polyline points="-9,0 -3,8 9,-8" fill="none" stroke="#4ade80" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  
+  <!-- Верхний левый (315°) -->
+  <g transform="translate(57, 57)">
+    <line x1="-8" y1="-8" x2="8" y2="8" stroke="#f87171" stroke-width="5.5" stroke-linecap="round"/>
+    <line x1="8" y1="-8" x2="-8" y2="8" stroke="#f87171" stroke-width="5.5" stroke-linecap="round"/>
+  </g>
+</svg>

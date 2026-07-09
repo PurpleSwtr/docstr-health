@@ -2,7 +2,7 @@ import time
 from functools import wraps
 from typing import Callable
 
-all_timed = []
+all_timed: list[float] = []
 
 
 def check_all_functions_time_avg(func: Callable):

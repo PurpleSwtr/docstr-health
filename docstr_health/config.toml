@@ -2,7 +2,7 @@
 debug = false
 use_uv = true
 
-excluded = [".venv", "__init__", "__pycache__"]
+excluded = [".venv", "venv", "__init__", "__pycache__"]
 excluded_functions = ["wrapper"]
 
 common_symbol = "●"
@@ -33,3 +33,32 @@ epic = ["Returns:", "Raises:", "Usage:", "Examples:", "Returns", "Raises", "Usag
 [requires_v3]
 special = ["Keyword arguments:", "Args:", "Parameters:", "Attributes:", "Keyword arguments", "Args", "Parameters", "Attributes", ":param", ":type"]
 epic = ["Returns:", "Yields:", "Raises:", "Usage:", "Examples:", "Returns", "Yields", "Raises", "Usage", "Examples", ":returns", ":rtype", ":raises"]
+
+[requires_v4]
+special = [
+    "Keyword arguments:", 
+    "Args:", 
+    "Parameters:", 
+    "Attributes:", 
+    "Keyword arguments", 
+    "Args", 
+    "Parameters", 
+    "Attributes", 
+    ":param", 
+    ":type", 
+    "Returns:", 
+    "Yields:", 
+    "Returns", 
+    "Yields", 
+    ":returns", 
+    ":rtype"
+]
+epic = [
+    "Raises:", 
+    "Usage:", 
+    "Examples:", 
+    "Raises", 
+    "Usage", 
+    "Examples", 
+    ":raises"
+]

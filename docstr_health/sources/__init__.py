@@ -7,6 +7,6 @@ from .pypi_package import PyPiPackageSource
 def get_repository_source(settings, args) -> BaseSource:
     if settings.repo_url:
         return GitRepositorySource(settings.repo_url)
-    if settings.pypi_url:
-        return PyPiPackageSource(settings.pypi_url)
+    if settings.pypi_package:
+        return PyPiPackageSource(settings.pypi_package)
     return LocalSource(args.project_path)

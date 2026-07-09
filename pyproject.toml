@@ -13,15 +13,49 @@ maintainers = [
     { name = "Mihail Sergeenko" },
 ]
 
+keywords = ["docstring", "health", "quality",]
+
 classifiers = [
-    "Programming Language :: Python :: 3",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Utilities",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3 :: Only",
     "Environment :: Console",
     "License :: OSI Approved :: Apache Software License",
 ]
 
 dependencies = [
     "rich>=15.0.0",
+]
+
+[dependency-groups]
+dev = [
+    {include-group = "test"},
+    {include-group = "typing"},
+    {include-group = "lint"},
+]
+
+lint = [
+    "ruff>=0.15.1",
+]
+
+typing = [
+    "mypy>=1.19.1",
+    "argcomplete>=3.6.3",
+]
+
+test = [
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "pytest-mock>=3.15.1",
+    "pytest-codspeed>=4.3.0",
 ]
 
 [project.scripts]

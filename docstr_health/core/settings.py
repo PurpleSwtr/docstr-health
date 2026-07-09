@@ -14,7 +14,7 @@ class AppSettings:
         no_cache: bool = False,
         ignore_tests: bool = False,
         repo_url: str | None = None,
-        pypi_url: str | None = None,
+        pypi_package: str | None = None,
         cache_dir: Path | None = None,
         excluded: list[str] | None = None,
     ) -> None:
@@ -23,7 +23,7 @@ class AppSettings:
         self.no_cache = no_cache
         self.ignore_tests = ignore_tests
         self.repo_url = repo_url
-        self.pypi_url = pypi_url
+        self.pypi_package = pypi_package
         self.cache_dir = cache_dir or config.get_cache_dir()
         self.excluded = excluded or config.excluded
 
@@ -37,7 +37,7 @@ class AppSettings:
             compact=args.compact,
             no_cache=args.no_cache,
             repo_url=args.repo_url,
-            pypi_url=args.pypi_url,
+            pypi_package=args.pypi_package,
             cache_dir=args.cache_dir,
             ignore_tests=args.ignore_tests,
         )

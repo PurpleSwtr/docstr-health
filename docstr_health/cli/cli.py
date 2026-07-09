@@ -79,7 +79,7 @@ class RichOutput:
             data: The original dictionary.
             order: If supplied, sorts by this order.
         """
-        items = data.items()
+        items = list(data.items())
         if sorting_reference:
             items = sorted(items, key=lambda item: sorting_reference.index(item[0]))
         return [(str(k), str(v)) for k, v in items]
@@ -122,5 +122,3 @@ class RichOutput:
             )
             table.add_row(status_text, str(count), end_section=end_section)
         return table
-        self.console.print(table)
-        print("\n")
