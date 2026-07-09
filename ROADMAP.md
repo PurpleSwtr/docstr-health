@@ -1,5 +1,10 @@
 # Roadmap
 
+## [v0.1.1] - Testing & Docstrings ← Development Status: 3 - Alpha
+
+- Test suite setup
+- Docstring unification
+
 ## [v0.2.0] - Statistics & Reporting ← Development Status: 3 - Alpha
 
 - Percentage metrics (docstring presence, status breakdown)

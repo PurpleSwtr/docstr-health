@@ -112,6 +112,7 @@ We use the following labels to categorize and prioritize issues:
 | Label              | Description                                                   |
 | ------------------ | ------------------------------------------------------------- |
 | `bug`              | Something isn't working as expected                           |
+| `performance`      | Performance optimization                                      |
 | `feature`          | New feature request                                           |
 | `enhancement`      | Improvement to existing functionality                         |
 | `documentation`    | Improvements or additions to documentation                    |
