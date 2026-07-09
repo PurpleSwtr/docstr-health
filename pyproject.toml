@@ -83,3 +83,13 @@ package = true
 [tool.uv.build-backend]
 module-root = ""
 source-include = ["docstr_health/config.toml"]
+source-exclude = [
+    "benchmarks/",
+    "storybook/",
+    "views/",
+    "docs/",
+    ".ruff_cache/",
+    ".mypy_cache/",
+    "venv/",
+    ".venv/",
+]

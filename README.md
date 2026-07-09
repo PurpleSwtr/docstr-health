@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./docs/assets/logo.png" alt="Docstr-Health" width="100%"/>
+  <img src="https://raw.githubusercontent.com/PurpleSwtr/docstr-health/main/docs/assets/logo.png" alt="Docstr-Health" width="100%"/>
 </p>
 
 # Docstr-Health
@@ -28,7 +28,7 @@ Analyze the quality of any Python project's documentation — locally, from Git,
 
 ## Preview
 
-<img src="./docs/assets/preview.gif" alt="Preview" />
+<img src="https://raw.githubusercontent.com/PurpleSwtr/docstr-health/main/docs/assets/preview.gif" alt="Preview" />
 
 ## Table of Contents
 
@@ -254,7 +254,7 @@ uv run pytest
 
 We welcome and appreciate all contributions!
 
-Before you begin, please read [Contributing Guide](CONTRIBUTING.md). It covers our coding standards, branching strategy, and the Pull Request process.
+Before you begin, please read [Contributing Guide](https://github.com/PurpleSwtr/docstr-health/blob/main/CONTRIBUTING.md). It covers coding standards, branching strategy, and the Pull Request process.
 
 ## License
 
