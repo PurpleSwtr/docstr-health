@@ -35,13 +35,6 @@ classifiers = [
     "License :: OSI Approved :: Apache Software License",
 ]
 
-[project.urls]
-Homepage = "https://github.com/PurpleSwtr/docstr-health"
-Repository = "https://github.com/PurpleSwtr/docstr-health.git"
-Documentation = "https://github.com/PurpleSwtr/docstr-health#readme"
-Issues = "https://github.com/PurpleSwtr/docstr-health/issues"
-Changelog = "https://github.com/PurpleSwtr/docstr-health/blob/main/CHANGELOG.md"
-
 dependencies = [
     "rich>=15.0.0",
 ]
@@ -75,6 +68,10 @@ docstr-health = "docstr_health.main:main"
 [project.urls]
 Homepage = "https://github.com/PurpleSwtr/docstr-health"
 Repository = "https://github.com/PurpleSwtr/docstr-health.git"
+Documentation = "https://github.com/PurpleSwtr/docstr-health#readme"
+Issues = "https://github.com/PurpleSwtr/docstr-health/issues"
+Changelog = "https://github.com/PurpleSwtr/docstr-health/blob/main/CHANGELOG.md"
+
 
 [build-system]
 requires = ["uv_build >= 0.11.23, <0.12.0"]
