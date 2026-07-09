@@ -11,11 +11,8 @@
   <a href="https://pypi.org/project/docstr-health/">
     <img src="https://img.shields.io/pypi/pyversions/docstr-health" alt="Python versions">
   </a>
-  <a href="https://pypi.org/project/docstr-health/">
-    <img src="https://img.shields.io/pypi/l/docstr-health" alt="License">
-  </a>
-  <a href="https://pypi.org/project/docstr-health/">
-    <img src="https://img.shields.io/pypi/dm/docstr-health" alt="Downloads">
+  <a href="https://github.com/PurpleSwtr/docstr-health/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/PurpleSWTR/docstr-health?color=2E7D32" alt="License">
   </a>
   <a href="https://github.com/PurpleSwtr/docstr-health">
     <img src="https://img.shields.io/github/stars/PurpleSwtr/docstr-health?style=social" alt="GitHub stars">
@@ -53,6 +50,7 @@ Analyze the quality of any Python project's documentation — locally, from Git,
 - [Development](#development)
 - [Contributing](#contributing)
 - [License](#license)
+- [Acknowledgements](#acknowledgements)
 
 ---
 
@@ -260,3 +258,8 @@ Before you begin, please read [Contributing Guide](https://github.com/PurpleSwtr
 
 Apache License 2.0 © Mihail Sergeenko. See [LICENSE](https://github.com/PurpleSwtr/docstr-health/blob/main/LICENSE) for
 details.
+
+## Acknowledgements
+
+Built using just one library:
+  [Rich](https://github.com/Textualize/rich)
