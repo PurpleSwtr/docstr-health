@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.2] - 2026-07-10
+
+### Bug Fixes
+
+- Fix the type hinting bug with support for versions 3.11-3.12
+
 ## [0.1.1] - 2026-07-10
 
 ### Bug Fixes
