@@ -70,7 +70,7 @@ def main():
     tables_to_display.append(
         renderer.get_table(
             title="General statistics",
-            headers=["Metric", "Value"],
+            headers=["Metric", "Value", "Rate"],
             data=general_stat_data,
             sorting_reference=config.get_sorted_general_stat(),
             last_line_separator=True,
@@ -79,7 +79,7 @@ def main():
     tables_to_display.append(
         renderer.get_table(
             title="Number of modules each status",
-            headers=["Module status", "Quantity"],
+            headers=["Module status", "Quantity", "Rate"],
             data=statuses,
             sorting_reference=config.get_sorted_statuses(),
         )
@@ -90,7 +90,7 @@ def main():
         tables_to_display.append(
             renderer.get_table(
                 title="Skipped modules",
-                headers=["Module", "Error"],
+                headers=["Module", "Error", "Rate"],
                 data=skipped,
             )
         )
