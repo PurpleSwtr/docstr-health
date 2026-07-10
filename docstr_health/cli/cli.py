@@ -107,6 +107,11 @@ class RichOutput:
         end_section = False
 
         total_rows = len(table_data)
+        total = 0
+        if 'total' in data:
+            total = data['total']
+        else: 
+            total = sum([cnt for _, cnt in data.items()])
 
         for i, (status, count) in enumerate(table_data):
             # last line check
@@ -120,5 +125,6 @@ class RichOutput:
                 style=style,
                 justify="left",
             )
-            table.add_row(status_text, str(count), end_section=end_section)
+            percentage = round(int(count) / total * 100, 1)
+            table.add_row(status_text, str(count), f'{percentage}%', end_section=end_section)
         return table
