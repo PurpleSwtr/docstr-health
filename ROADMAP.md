@@ -1,8 +1,9 @@
 # Roadmap
 
-## [v0.1.1] - Testing & Docstrings ← Development Status: 3 - Alpha
+## [v0.1.0] - Testing & Docstrings ← Development Status: 3 - Alpha
 
 - Test suite setup
+  - Testing on different Python versions
 - Docstring unification
 
 ## [v0.2.0] - Statistics & Reporting ← Development Status: 3 - Alpha

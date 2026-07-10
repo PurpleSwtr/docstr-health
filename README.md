@@ -14,6 +14,9 @@
   <a href="https://github.com/PurpleSwtr/docstr-health/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/PurpleSWTR/docstr-health?color=2E7D32" alt="License">
   </a>
+  <a href="https://pypi.org/project/docstr-health/">
+    <img src="https://img.shields.io/pypi/dm/docstr-health" alt="Downloads">
+  </a>
   <a href="https://github.com/PurpleSwtr/docstr-health">
     <img src="https://img.shields.io/github/stars/PurpleSwtr/docstr-health?style=social" alt="GitHub stars">
   </a>
@@ -262,4 +265,4 @@ details.
 ## Acknowledgements
 
 Built using just one library:
-  [Rich](https://github.com/Textualize/rich)
+[Rich](https://github.com/Textualize/rich)

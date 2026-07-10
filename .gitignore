@@ -3,6 +3,10 @@ __pycache__/
 .mypy_cache/
 venv/
 .venv/
+.venv-3.11/
+.venv-3.12/
+.venv-3.13/
+.venv-3.14/
 venv/
 EXAMPLE.md
 .vscode

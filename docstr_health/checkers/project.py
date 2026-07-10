@@ -39,7 +39,7 @@ class ProjectChecker:
 
     def docstring_check(
         self,
-    ) -> Generator[PythonModule]:
+    ) -> Generator[PythonModule, None, None]:
         for module in self.modules:
             try:
                 checker = DocstringChecker(module, settings=self.settings)
