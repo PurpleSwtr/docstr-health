@@ -1,6 +1,7 @@
 __pycache__/
 .ruff_cache/
 .mypy_cache/
+.pytest_cache/
 venv/
 .venv/
 .venv-3.11/
