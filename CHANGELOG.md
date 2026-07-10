@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.1] - 2026-07-10
+
+### Bug Fixes
+
+- Fix `FileNotFoundError` on first run by ensuring `~/.cache/docstr-health/logs/` exists before logger initialization
+
 ## [0.1.0] - 2026-07-09
 
 ### Features
