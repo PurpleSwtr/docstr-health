@@ -1,11 +1,10 @@
+import tomllib
 from importlib import metadata
 from pathlib import Path
 
-import tomllib
-
 _PACKAGE_ROOT: Path = Path(__file__).resolve().parent.parent
 
-_BASE_CACHE_DIR = Path.home() / ".cache" / "docstring-test-checker"
+_BASE_CACHE_DIR = Path.home() / ".cache" / "docstr-health"
 _REPOS_DIR = _BASE_CACHE_DIR / "repos"
 _LOGS_DIR = _BASE_CACHE_DIR / "logs"
 

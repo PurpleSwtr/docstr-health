@@ -30,11 +30,14 @@ class DocstringChecker(BaseChecker):
     def get_statistics(self, report: ModuleReport) -> list[Text]:
         statistics = []
         statistics.append(Text("Statistics:", justify="center"))
+        total = self.total_inspected_statuses
+
         for status, value in self.inspected_statuses.items():
             if value > 0:
                 symbol = config.parameters[f"{status}_symbol"]
                 color = config.parameters[f"{status}_color"]
-                statistics.append(Text(f"{symbol} {status} - {value}", style=color))
+                rate = round(value / total * 100, 1)
+                statistics.append(Text(f"{symbol} {status} - {value} ({rate}%)", style=color))
 
         avg_len = report.average_docstring_length
         med_len = report.median_docstring_length
