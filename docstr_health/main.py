@@ -63,6 +63,17 @@ def main():
         general_stat_data["modules"] = project_checker.get_count_modules()
     general_stat_data["total"] = sum(general_stat_data.values())
 
+    avg_len = project_checker.get_avg_docstring_length()
+    med_len = project_checker.get_median_docstring_length()
+    longest = project_checker.get_longest_docstring()
+
+    general_stat_data["avg docstring length"] = f"{avg_len:.1f} words"
+    general_stat_data["median docstring length"] = f"{med_len:.1f} words"
+    if longest:
+        general_stat_data["longest docstring"] = f"{longest[0]} ({longest[1]} words)"
+    else:
+        general_stat_data["longest docstring"] = "N/A"
+
     renderer = RichOutput()
 
     tables_to_display = []

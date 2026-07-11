@@ -48,6 +48,9 @@ class Config:
             "class",
             "function",
             "async function",
+            "avg docstring length",
+            "median docstring length",
+            "longest docstring",
             "total",
         ]
 
