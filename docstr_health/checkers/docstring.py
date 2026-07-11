@@ -51,11 +51,11 @@ class DocstringChecker(BaseChecker):
             module_docstring = self.module.get_module_docstring()
             self.check_docstring(module_docstring)
 
-        for func in self.module.functions_to_check:
-            self.inspect_func_status(func)
-
         if not self.settings.compact:
             self._display()
+        else:
+            for func in self.module.functions_to_check:
+                self.inspect_func_status(func)
 
         return ModuleReport(
             module_status=self.module_status,
