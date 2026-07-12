@@ -1,5 +1,7 @@
 import sys
 from contextlib import contextmanager
+from io import TextIOWrapper
+from typing import cast
 
 from rich import print as rich_print
 from rich.columns import Columns
@@ -21,6 +23,9 @@ def spacing():
 
 
 def main():
+    cast(TextIOWrapper, sys.stdout).reconfigure(encoding="utf-8", errors="replace")
+    cast(TextIOWrapper, sys.stderr).reconfigure(encoding="utf-8", errors="replace")
+
     parser = get_parser()
     args = parser.parse_args()
 

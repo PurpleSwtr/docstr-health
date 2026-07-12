@@ -11,8 +11,7 @@ from ..core.enums import StatusDocstring
 
 class RichOutput:
     def __init__(self) -> None:
-        self.console = Console()
-        # self.text = ""
+        self.console = Console(force_terminal=False)
         self.color = "common"
 
     def set_color(self, color: str):
