@@ -81,10 +81,11 @@ def main():
     tables_to_display.append(
         renderer.get_table(
             title="General statistics",
-            headers=["Metric", "Value", "Rate"],
+            headers=["Metric", "Value"],
             data=general_stat_data,
             sorting_reference=config.get_sorted_general_stat(),
             last_line_separator=True,
+            show_percentage=False,
         )
     )
     tables_to_display.append(
@@ -101,8 +102,9 @@ def main():
         tables_to_display.append(
             renderer.get_table(
                 title="Skipped modules",
-                headers=["Module", "Error", "Rate"],
+                headers=["Module", "Error"],
                 data=skipped,
+                show_percentage=False,
             )
         )
 
