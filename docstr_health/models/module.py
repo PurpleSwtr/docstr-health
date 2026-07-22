@@ -26,6 +26,9 @@ class PythonModule:
                 raise PythonParseError(self.file_path, e)
         return self._tree
 
+    def release_tree(self):
+        self._tree = None
+
     @property
     def functions(self) -> list[PythonFunction]:
         if self.tree:

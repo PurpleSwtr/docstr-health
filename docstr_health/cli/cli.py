@@ -105,16 +105,14 @@ class RichOutput:
 
         style = ""
         end_section = False
-
         total_rows = len(table_data)
+        has_numeric = all(isinstance(v, (int, float)) for v in data.values())
+
         total = 0
-        if 'total' in data:
-            total = data['total']
-        else: 
-            total = sum([cnt for _, cnt in data.items()])
+        if has_numeric:
+            total = data.get("total", sum(data.values()))
 
         for i, (status, count) in enumerate(table_data):
-            # last line check
             if i == total_rows - 2 and last_line_separator:
                 end_section = True
             if status in config.get_sorted_statuses():
@@ -125,6 +123,10 @@ class RichOutput:
                 style=style,
                 justify="left",
             )
-            percentage = round(int(count) / total * 100, 1)
-            table.add_row(status_text, str(count), f'{percentage}%', end_section=end_section)
+            if has_numeric and total > 0:
+                percentage = round(int(count) / total * 100, 1)
+                rate_str = f"{percentage}%"
+            else:
+                rate_str = "-"
+            table.add_row(status_text, str(count), rate_str, end_section=end_section)
         return table

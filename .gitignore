@@ -24,3 +24,4 @@ build/
 .env
 .python-version
 .coverage
+scripts/

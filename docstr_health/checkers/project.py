@@ -53,6 +53,7 @@ class ProjectChecker:
             except PythonParseError as e:
                 self._skipped_modules.append((module.file_path, str(e)))
 
+            module.release_tree()
             yield module
 
     @property
