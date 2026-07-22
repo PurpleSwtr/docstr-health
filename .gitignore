@@ -1,6 +1,7 @@
 __pycache__/
 .ruff_cache/
 .mypy_cache/
+.pytest_cache/
 venv/
 .venv/
 .venv-3.11/
@@ -11,6 +12,7 @@ venv/
 EXAMPLE.md
 .vscode
 *.log
+*.prof
 benchmarks/
 sampling/
 *.tape
@@ -21,3 +23,4 @@ dist/
 build/
 .env
 .python-version
+.coverage

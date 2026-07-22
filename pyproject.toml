@@ -93,3 +93,6 @@ source-exclude = [
     "venv/",
     ".venv/",
 ]
+
+[tool.docstr-health]
+debug = false
