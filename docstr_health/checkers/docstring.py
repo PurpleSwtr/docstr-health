@@ -77,7 +77,9 @@ class DocstringChecker(BaseChecker):
                 )
             )
 
-        title = self.module if self.settings.short_names else self.module.file_path
+        title = (
+            self.module if self.settings.short_names else self.module.file_path.as_uri()
+        )
 
         for func in self.module.functions_to_check:
             inspected.append(self.get_func_status_text(func))
