@@ -3,10 +3,10 @@ from pathlib import Path
 from typing import Generator
 
 from ..checkers.docstring import DocstringChecker
-from ..core.exceptions import PythonParseError
+from ..core.exceptions import PythonFilesNotFound, PythonParseError
 from ..core.settings import AppSettings
 from ..models.module import PythonModule
-from ..models.report import ModuleReport
+from ..models.report import ModuleReport, ProjectReport
 from ..sources.base import BaseSource
 
 
@@ -37,6 +37,9 @@ class ProjectChecker:
         statuses: list = [report.module_status for report in self._reports]
         return Counter(statuses)
 
+    def get_project_report(self):
+        return ProjectReport(statuses=self.get_statuses_stat())
+
     def docstring_check(
         self,
     ) -> Generator[PythonModule, None, None]:
@@ -58,12 +61,12 @@ class ProjectChecker:
 
     def _scan_python_files(self) -> list[Path]:
         result: list[Path] = []
+        if self.settings.ignore_tests:
+            self.settings.excluded.append("test_")
         if self._target_dir:
             for file_path in self._target_dir.rglob("*.py"):
                 file_name = file_path.name.lower()
                 path_str = str(file_path).lower()
-                if self.settings.ignore_tests:
-                    self.settings.excluded.append("test_")
                 excluded = [word.lower() for word in self.settings.excluded]
 
                 is_excluded = any(
@@ -72,5 +75,9 @@ class ProjectChecker:
 
                 if not is_excluded:
                     result.append(file_path)
+
+            if not result:
+                raise PythonFilesNotFound()
+
             return result
         return []

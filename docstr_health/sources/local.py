@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from ..core.exceptions import DirectoryNotFoundError, NotADirectoryPathError
 from .base import BaseSource
 
 
@@ -11,9 +12,9 @@ class LocalSource(BaseSource):
 
     def get_path(self) -> Path:
         if not self._path.exists():
-            raise FileNotFoundError(f"Directory not found: {self._path}")
+            raise DirectoryNotFoundError(self._path)
         if not self._path.is_dir():
-            raise NotADirectoryError(f"Not a directory: {self._path}")
+            raise NotADirectoryPathError(self._path)
         return self._path
 
     def cleanup(self) -> None:

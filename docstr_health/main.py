@@ -9,6 +9,7 @@ from .cli.cli import RichOutput
 from .cli.parser import get_parser
 from .cli.progress_bar import progress_bar
 from .core.config import config
+from .core.exceptions import DocstrHealthError
 from .core.logger import logger
 from .core.settings import AppSettings
 from .sources import get_repository_source
@@ -97,10 +98,20 @@ def main():
 
     rich_print(Columns(tables_to_display))
 
+    project_report = project_checker.get_project_report()
+
+    renderer.display_project_report(project_report=project_report)
+
     if settings.no_cache:
         source.cleanup()
+
+    return 0
 
 
 if __name__ == "__main__":
     with spacing():
-        sys.exit(main())
+        try:
+            sys.exit(main())
+        except DocstrHealthError as e:
+            rich_print(f"[red]{e}[/red]")
+            sys.exit(1)

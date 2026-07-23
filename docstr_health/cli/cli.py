@@ -7,6 +7,7 @@ from rich.text import Text
 
 from ..core.config import config
 from ..core.enums import StatusDocstring
+from ..models.report import ProjectReport
 
 
 class RichOutput:
@@ -56,6 +57,15 @@ class RichOutput:
             )
         )
         print("\n")
+
+    def display_project_report(self, project_report: ProjectReport):
+        print("Project status:", end="")
+
+        project_status = project_report.get_project_status()
+
+        self.cprint(
+            self.func_docstring_status(project_status, StatusDocstring(project_status))
+        )
 
     @staticmethod
     def _get_style(value: str):

@@ -1,3 +1,5 @@
+from typing import Counter
+
 from ..models.function import PythonFunction
 
 
@@ -29,4 +31,12 @@ class ModuleReport:
         return self._func_types
 
 
-class ProjectReport: ...
+class ProjectReport:
+    def __init__(self, statuses: Counter | None = None) -> None:
+        self._statuses = statuses
+
+    def get_project_status(self) -> str:
+        if self._statuses:
+            return self._statuses.most_common(1)[0][0]
+        else:
+            raise ValueError
