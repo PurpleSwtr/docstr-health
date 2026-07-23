@@ -35,7 +35,9 @@ class DocstringChecker(BaseChecker):
                 symbol = config.parameters[f"{status}_symbol"]
                 color = config.parameters[f"{status}_color"]
                 rate = round(value / total * 100, 1)
-                statistics.append(Text(f"{symbol} {status} - {value} ({rate}%)", style=color))
+                statistics.append(
+                    Text(f"{symbol} {status} - {value} ({rate}%)", style=color)
+                )
         return statistics
         # self.output.display_panel(
         #         text=inspected_functions,
@@ -127,7 +129,7 @@ class DocstringChecker(BaseChecker):
         status = self.inspect_func_status(func)
         return self.output.func_docstring_status(func_name=func.name, status=status)
 
-    def check_docstring(self, docstring: str | None) -> StatusDocstring:
+    def check_docstring(self, docstring: str | object | None) -> StatusDocstring:
         """Evaluate the quality of a docstring and assign a status.
 
         The evaluation follows a priority based on content presence

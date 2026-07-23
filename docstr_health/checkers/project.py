@@ -46,10 +46,6 @@ class ProjectChecker:
                 module_report = checker.check_module()
                 if module_report is not None:
                     self._reports.append(module_report)
-                # else:
-                #     self._skipped_modules.append(
-                #         (module.file_path, "No functions to check")
-                #     )
             except PythonParseError as e:
                 self._skipped_modules.append((module.file_path, str(e)))
 

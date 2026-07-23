@@ -1,5 +1,3 @@
-import ast
-
 from ..models.function import PythonFunction
 
 
@@ -14,10 +12,10 @@ class ModuleReport:
     def _count_types(self, functions: list[PythonFunction]) -> dict[str, int]:
         res = {"class": 0, "function": 0, "async function": 0}
         for func in functions:
-            match func._ast_node:
-                case ast.ClassDef():
+            match func.node_type:
+                case "ClassDef":
                     res["class"] += 1
-                case ast.AsyncFunctionDef():
+                case "AsyncFunctionDef":
                     res["async function"] += 1
                 case _:
                     res["function"] += 1

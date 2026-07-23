@@ -6,9 +6,13 @@ from ..models.report import ModuleReport
 
 
 class BaseChecker(ABC):
+    _shared_output: RichOutput | None = None
+
     def __init__(self, module: PythonModule) -> None:
         self.module = module
-        self.output = RichOutput()
+        if BaseChecker._shared_output is None:
+            BaseChecker._shared_output = RichOutput()
+        self.output = BaseChecker._shared_output
 
     @abstractmethod
     def check_module(self) -> ModuleReport | None:
