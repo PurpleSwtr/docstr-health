@@ -71,6 +71,12 @@ def get_parser():
         help="Ignore Test Units",
     )
 
+    parser.add_argument(
+        "--short-names",
+        action="store_true",
+        help="Replaces full path to the file with short ones",
+    )
+
     # parser.add_argument(
     #     "--details-skipped",
     # )

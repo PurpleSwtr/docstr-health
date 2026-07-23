@@ -77,13 +77,15 @@ class DocstringChecker(BaseChecker):
                 )
             )
 
+        title = self.module if self.settings.short_names else self.module.file_path
+
         for func in self.module.functions_to_check:
             inspected.append(self.get_func_status_text(func))
 
         statistics = self.get_statistics()
         self.output.display_panel(
             text=[inspected, statistics],
-            title=str(self.module),
+            title=str(title),
             panel_status=self.module_status,
         )
 
