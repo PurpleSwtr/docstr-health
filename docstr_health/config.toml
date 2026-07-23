@@ -5,6 +5,10 @@ use_uv = true
 excluded = [".venv", "venv", "__init__", "__pycache__"]
 excluded_functions = ["wrapper"]
 
+threshold_warning = 30
+threshold_special = 50
+threshold_epic = 50
+
 common_symbol = "●"
 bad_symbol = "✗"
 warning_symbol = "⚠"

@@ -106,16 +106,26 @@ class DocstringChecker(BaseChecker):
         total = self.total_inspected_statuses
         statuses = self.inspected_statuses
 
+        def to_percent(v: int | None) -> float:
+            if isinstance(v, int):
+                return v * 0.01
+            else:
+                raise ValueError
+
+        threshold_warning = to_percent(self.settings.threshold_warning)
+        threshold_special = to_percent(self.settings.threshold_special)
+        threshold_epic = to_percent(self.settings.threshold_epic)
+
         if statuses["bad"] == total or statuses["bad"] > 0.5 * total:
             return "bad"
 
-        if statuses["bad"] > 0:
+        if statuses["bad"] > threshold_warning * total:
             return "warning"
 
-        if statuses["epic"] > 0.5 * total:
+        if statuses["epic"] > threshold_epic * total:
             return "epic"
         if (
-            statuses["special"] > 0.5 * total
+            statuses["special"] > threshold_special * total
             or statuses["special"] == statuses["epic"]
             and statuses["special"] > 0
             and statuses["epic"] > 0

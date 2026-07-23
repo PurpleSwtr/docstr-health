@@ -77,6 +77,29 @@ def get_parser():
         help="Replaces full path to the file with short ones",
     )
 
+    measurement_group = parser.add_argument_group("parameters of methods measurement")
+
+    measurement_group.add_argument(
+        "--threshold-warning",
+        type=int,
+        help="",
+        default=config.parameters["threshold_warning"],
+    )
+
+    measurement_group.add_argument(
+        "--threshold-special",
+        type=int,
+        help="",
+        default=config.parameters["threshold_special"],
+    )
+
+    measurement_group.add_argument(
+        "--threshold-epic",
+        type=int,
+        help="",
+        default=config.parameters["threshold_epic"],
+    )
+
     # parser.add_argument(
     #     "--details-skipped",
     # )
