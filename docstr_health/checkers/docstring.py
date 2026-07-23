@@ -20,12 +20,14 @@ class DocstringChecker(BaseChecker):
             "skipped": 0,
         }
         self.settings: AppSettings = settings
+        self._func_statuses: dict[int, StatusDocstring] = {}
+        self._module_doc_status: StatusDocstring | None = None
 
     @property
     def total_inspected_statuses(self):
         return sum(status for status in list(self.inspected_statuses.values()))
 
-    def get_statistics(self) -> list[Text]:
+    def get_statistics(self, report: ModuleReport) -> list[Text]:
         statistics = []
         statistics.append(Text("Statistics:", justify="center"))
         total = self.total_inspected_statuses
@@ -36,6 +38,18 @@ class DocstringChecker(BaseChecker):
                 color = config.parameters[f"{status}_color"]
                 rate = round(value / total * 100, 1)
                 statistics.append(Text(f"{symbol} {status} - {value} ({rate}%)", style=color))
+
+        avg_len = report.average_docstring_length
+        med_len = report.median_docstring_length
+        longest = report.longest_docstring
+
+        statistics.append(Text(f"Avg length: {avg_len:.1f} words", style="cyan"))
+        statistics.append(Text(f"Median length: {med_len:.1f} words", style="cyan"))
+        if longest:
+            statistics.append(Text(f"Longest: {longest[0]} ({longest[1]} words)", style="cyan"))
+        else:
+            statistics.append(Text("Longest: N/A", style="cyan"))
+
         return statistics
         # self.output.display_panel(
         #         text=inspected_functions,
@@ -44,41 +58,47 @@ class DocstringChecker(BaseChecker):
         #     )
 
     def check_module(self) -> ModuleReport | None:
-        if not self.module.functions_to_check:
+        functions_to_check = self.module.functions_to_check
+        if not functions_to_check:
             return None
 
         if self.settings.doc_check:
             module_docstring = self.module.get_module_docstring()
-            self.check_docstring(module_docstring)
+            self._module_doc_status = self.check_docstring(module_docstring)
 
-        if not self.settings.compact:
-            self._display()
-        else:
-            for func in self.module.functions_to_check:
-                self.inspect_func_status(func)
+        docstring_lengths = []
+        for func in functions_to_check:
+            self._func_statuses[id(func)] = self.inspect_func_status(func)
+            docstring = func.get_docstring()
+            if docstring:
+                docstring_lengths.append((func.name, len(docstring.split())))
 
-        return ModuleReport(
+        report = ModuleReport(
             module_status=self.module_status,
-            inspected_functions=self.module.functions_to_check,
+            inspected_functions=functions_to_check,
+            docstring_lengths=docstring_lengths,
         )
 
-    def _display(self):
+        if not self.settings.compact:
+            self._display(report)
+
+        return report
+
+    def _display(self, report: ModuleReport):
         inspected = [Text("Inspected:", justify="center")]
 
-        if self.settings.doc_check:
-            module_docstring = self.module.get_module_docstring()
-            module_status = self.check_docstring(module_docstring)
+        if self.settings.doc_check and self._module_doc_status is not None:
             inspected.append(
                 self.output.func_docstring_status(
                     func_name="__doc__",
-                    status=module_status,
+                    status=self._module_doc_status,
                 )
             )
 
-        for func in self.module.functions_to_check:
+        for func in report.inspected_functions:
             inspected.append(self.get_func_status_text(func))
 
-        statistics = self.get_statistics()
+        statistics = self.get_statistics(report)
         self.output.display_panel(
             text=[inspected, statistics],
             title=str(self.module),
@@ -124,7 +144,7 @@ class DocstringChecker(BaseChecker):
         return self.check_docstring(docstring)
 
     def get_func_status_text(self, func: PythonFunction) -> Text:
-        status = self.inspect_func_status(func)
+        status = self._func_statuses[id(func)]
         return self.output.func_docstring_status(func_name=func.name, status=status)
 
     def check_docstring(self, docstring: str | None) -> StatusDocstring:

@@ -63,6 +63,17 @@ def main():
         general_stat_data["modules"] = project_checker.get_count_modules()
     general_stat_data["total"] = sum(general_stat_data.values())
 
+    avg_len = project_checker.get_avg_docstring_length()
+    med_len = project_checker.get_median_docstring_length()
+    longest = project_checker.get_longest_docstring()
+
+    general_stat_data["avg docstring length"] = f"{avg_len:.1f} words"
+    general_stat_data["median docstring length"] = f"{med_len:.1f} words"
+    if longest:
+        general_stat_data["longest docstring"] = f"{longest[0]} ({longest[1]} words)"
+    else:
+        general_stat_data["longest docstring"] = "N/A"
+
     renderer = RichOutput()
 
     tables_to_display = []
@@ -70,10 +81,11 @@ def main():
     tables_to_display.append(
         renderer.get_table(
             title="General statistics",
-            headers=["Metric", "Value", "Rate"],
+            headers=["Metric", "Value"],
             data=general_stat_data,
             sorting_reference=config.get_sorted_general_stat(),
             last_line_separator=True,
+            show_percentage=False,
         )
     )
     tables_to_display.append(
@@ -90,8 +102,9 @@ def main():
         tables_to_display.append(
             renderer.get_table(
                 title="Skipped modules",
-                headers=["Module", "Error", "Rate"],
+                headers=["Module", "Error"],
                 data=skipped,
+                show_percentage=False,
             )
         )
 

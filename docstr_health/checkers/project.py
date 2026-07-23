@@ -1,3 +1,4 @@
+import statistics
 from collections import Counter
 from pathlib import Path
 from typing import Generator
@@ -36,6 +37,30 @@ class ProjectChecker:
     def get_statuses_stat(self) -> Counter:
         statuses: list = [report.module_status for report in self._reports]
         return Counter(statuses)
+
+    def _get_all_docstring_lengths(self) -> list[tuple[str, int]]:
+        all_lengths = []
+        for report in self._reports:
+            all_lengths.extend(report.docstring_lengths)
+        return all_lengths
+
+    def get_avg_docstring_length(self) -> float:
+        docstrings = self._get_all_docstring_lengths()
+        if not docstrings:
+            return 0.0
+        return float(statistics.mean(length for _, length in docstrings))
+
+    def get_median_docstring_length(self) -> float:
+        docstrings = self._get_all_docstring_lengths()
+        if not docstrings:
+            return 0.0
+        return float(statistics.median(length for _, length in docstrings))
+
+    def get_longest_docstring(self) -> tuple[str, int] | None:
+        docstrings = self._get_all_docstring_lengths()
+        if not docstrings:
+            return None
+        return max(docstrings, key=lambda x: x[1])
 
     def docstring_check(
         self,
