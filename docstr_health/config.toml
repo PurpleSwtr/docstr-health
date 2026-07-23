@@ -5,7 +5,8 @@ use_uv = true
 excluded = [".venv", "venv", "__init__", "__pycache__"]
 excluded_functions = ["wrapper"]
 
-threshold_warning = 30
+threshold_bad = 80
+threshold_warning = 60
 threshold_special = 50
 threshold_epic = 50
 

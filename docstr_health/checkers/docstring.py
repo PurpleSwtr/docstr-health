@@ -95,11 +95,11 @@ class DocstringChecker(BaseChecker):
     def module_status(self) -> str:
         """
         Module status is calculated as follows:
-        All bad                     -> bad
-        Some bad (not all)          -> warning
-        No bad + epic > 50%         -> epic
-        No bad + special > 50%      -> special
-        No bad, few special/epic    -> good
+        All bad OR bad > threshold_bad% default: 80         -> bad
+        bad > threshold_warning% default: 60                -> warning
+        epic > threshold_epic% default: 50                  -> epic
+        special > threshold_special% default: 50 OR tied    -> special
+        otherwise                                           -> good
 
         Rounds down when special and epic are tied.
         """
@@ -112,11 +112,12 @@ class DocstringChecker(BaseChecker):
             else:
                 raise ValueError
 
+        threshold_bad = to_percent(self.settings.threshold_bad)
         threshold_warning = to_percent(self.settings.threshold_warning)
         threshold_special = to_percent(self.settings.threshold_special)
         threshold_epic = to_percent(self.settings.threshold_epic)
 
-        if statuses["bad"] == total or statuses["bad"] > 0.5 * total:
+        if statuses["bad"] == total or statuses["bad"] > threshold_bad * total:
             return "bad"
 
         if statuses["bad"] > threshold_warning * total:

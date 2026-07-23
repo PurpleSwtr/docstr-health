@@ -16,6 +16,7 @@ class AppSettings:
         short_names: bool = False,
         repo_url: str | None = None,
         pypi_package: str | None = None,
+        threshold_bad: int | None = None,
         threshold_warning: int | None = None,
         threshold_special: int | None = None,
         threshold_epic: int | None = None,
@@ -29,6 +30,7 @@ class AppSettings:
         self.short_names = short_names
         self.repo_url = repo_url
         self.pypi_package = pypi_package
+        self.threshold_bad = threshold_bad
         self.threshold_warning = threshold_warning
         self.threshold_special = threshold_special
         self.threshold_epic = threshold_epic
@@ -47,6 +49,7 @@ class AppSettings:
             no_cache=args.no_cache,
             repo_url=args.repo_url,
             pypi_package=args.pypi_package,
+            threshold_bad=args.threshold_bad,
             threshold_warning=args.threshold_warning,
             threshold_special=args.threshold_special,
             threshold_epic=args.threshold_epic,

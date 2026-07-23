@@ -80,6 +80,13 @@ def get_parser():
     measurement_group = parser.add_argument_group("parameters of methods measurement")
 
     measurement_group.add_argument(
+        "--threshold-bad",
+        type=int,
+        help="",
+        default=config.parameters["threshold_bad"],
+    )
+
+    measurement_group.add_argument(
         "--threshold-warning",
         type=int,
         help="",
