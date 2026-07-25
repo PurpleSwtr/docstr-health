@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, auto
 
 
 class ModuleStatus(Enum):
@@ -16,9 +16,22 @@ class StatusDocstring(Enum):
     SPECIAL = "special"
     EPIC = "epic"
 
+class StatusProject(Enum):
+    BAD = "bad"
+    WARNING = "warning"
+    GOOD = "good"
+    SPECIAL = "special"
+    EPIC = "epic"
+
+class StatusProjectPrioritized(Enum):
+    BAD = auto()
+    WARNING = auto()
+    GOOD = auto()
+    SPECIAL = auto()
+    EPIC = auto()
 
 class StatusTypechecking(Enum):
     NONE = "bad"
-    ARGS = "waning"
-    RETURN = "waning"
+    ARGS = "warning"
+    RETURN = "warning"
     FULL = "good"

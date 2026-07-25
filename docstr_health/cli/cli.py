@@ -1,4 +1,5 @@
 from rich import print as rich_print
+from rich.columns import Columns
 from rich.console import Console, Group
 from rich.panel import Panel
 from rich.rule import Rule
@@ -11,15 +12,18 @@ from ..models.report import ProjectReport
 
 
 class RichOutput:
-    def __init__(self) -> None:
+    def __init__(self, quiet: bool = False) -> None:
         self.console = Console()
         # self.text = ""
+        self.quiet = quiet
         self.color = "common"
 
     def set_color(self, color: str):
         self.color = color
 
     def cprint(self, text: Text):
+        if self.quiet:
+            return
         self.console.print(text)
 
     def func_docstring_status(self, func_name: str, status: StatusDocstring) -> Text:
@@ -33,6 +37,8 @@ class RichOutput:
     def display_panel(
         self, text: list[list[Text]], title: str, panel_status: str = "common"
     ):
+        if self.quiet:
+            return
         symbol = config.parameters[f"{panel_status}_symbol"]
         subtitle = f"{symbol} {panel_status} {symbol}"
         border_style = config.parameters[f"{panel_status}_color"]
@@ -59,6 +65,8 @@ class RichOutput:
         print("\n")
 
     def display_project_report(self, project_report: ProjectReport):
+        if self.quiet:
+            return
         print("Project status:", end="")
 
         project_status = project_report.get_project_status()
@@ -66,6 +74,11 @@ class RichOutput:
         self.cprint(
             self.func_docstring_status(project_status, StatusDocstring(project_status))
         )
+
+    def display_summary(self, tables: list[Table]):
+        if self.quiet:
+            return
+        rich_print(Columns(tables))
 
     @staticmethod
     def _get_style(value: str):

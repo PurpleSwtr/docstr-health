@@ -107,6 +107,13 @@ def get_parser():
         default=config.parameters["threshold_epic"],
     )
 
+    # measurement_group.add_argument(
+    #     "--allow-failure",
+    #     type=str,
+    #     help="",
+    #     default=config.parameters["threshold_epic"],
+    # )
+
     # parser.add_argument(
     #     "--details-skipped",
     # )

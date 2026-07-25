@@ -39,11 +39,6 @@ class DocstringChecker(BaseChecker):
                     Text(f"{symbol} {status} - {value} ({rate}%)", style=color)
                 )
         return statistics
-        # self.output.display_panel(
-        #         text=inspected_functions,
-        #         title=str(self.module),
-        #         panel_status=panel_status,
-        #     )
 
     def check_module(self) -> ModuleReport | None:
         if not self.module.functions_to_check:

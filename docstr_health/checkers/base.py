@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+
+from ..core.config import config
 from ..cli.cli import RichOutput
 from ..models.module import PythonModule
 from ..models.report import ModuleReport
@@ -11,7 +13,7 @@ class BaseChecker(ABC):
     def __init__(self, module: PythonModule) -> None:
         self.module = module
         if BaseChecker._shared_output is None:
-            BaseChecker._shared_output = RichOutput()
+            BaseChecker._shared_output = RichOutput(quiet=config.parameters.get("ci", False))
         self.output = BaseChecker._shared_output
 
     @abstractmethod

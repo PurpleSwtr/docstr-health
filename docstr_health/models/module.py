@@ -34,6 +34,8 @@ class PythonModule:
 
     def release_tree(self):
         self._tree = None
+        self._functions = None
+        self._functions_to_check = None
 
     @property
     def functions(self) -> list[PythonFunction]:

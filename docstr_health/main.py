@@ -2,12 +2,13 @@ import sys
 from contextlib import contextmanager
 
 from rich import print as rich_print
-from rich.columns import Columns
+
+from docstr_health.checkers.ci_failure import CiFailureChecker
 
 from .checkers.project import ProjectChecker
 from .cli.cli import RichOutput
 from .cli.parser import get_parser
-from .cli.progress_bar import progress_bar
+from .cli.runner import run_check
 from .core.config import config
 from .core.exceptions import DocstrHealthError
 from .core.logger import logger
@@ -32,6 +33,7 @@ def main():
 
     config.ensure_directories()
     settings = AppSettings.from_args(args)
+    renderer = RichOutput(quiet=config.parameters.get("ci", False))
 
     if settings.cache_dir:
         config.set_cache_dir(settings.cache_dir)
@@ -42,29 +44,18 @@ def main():
 
     project_checker = ProjectChecker(source=source, settings=settings)
 
-    if project_checker.modules:
-        start_module_name = project_checker.modules[0].file_path.name
-    else:
-        start_module_name = "No modules found"
-
-    with progress_bar() as pg:
-        _task = pg.add_task(
-            "Checking...",
-            total=len(project_checker.modules),
-            module_name=start_module_name,
-        )
-
-        for task in project_checker.docstring_check():
-            pg.update(_task, advance=1, module_name=task.file_path.name)
+    run_check(project_checker)
 
     statuses = project_checker.get_statuses_stat()
+    project_report = project_checker.get_project_report()
+
+    ci_checker = CiFailureChecker(project_report=project_report)
+    ci_checker.assertion()
 
     general_stat_data = project_checker.get_quantity_of_func_type()
     if args.doc_modules:
         general_stat_data["modules"] = project_checker.get_count_modules()
     general_stat_data["total"] = sum(general_stat_data.values())
-
-    renderer = RichOutput()
 
     tables_to_display = []
 
@@ -96,9 +87,7 @@ def main():
             )
         )
 
-    rich_print(Columns(tables_to_display))
-
-    project_report = project_checker.get_project_report()
+    renderer.display_summary(tables_to_display)  
 
     renderer.display_project_report(project_report=project_report)
 
