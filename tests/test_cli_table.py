@@ -1,4 +1,3 @@
-import pytest
 from rich.table import Table
 
 from docstr_health.cli.cli import RichOutput
@@ -40,19 +39,28 @@ def test_get_table_show_percentage_false_skips_percentage_column():
     assert isinstance(table, Table)
 
 
-def test_get_table_percentage_true_with_string_value_raises_typeerror():
+def test_get_table_percentage_true_with_string_value_does_not_raise():
     renderer = RichOutput()
     data = {"skipped_module.py": "SyntaxError: '(' was never closed"}
-    with pytest.raises(TypeError):
-        renderer.get_table(
-            title="Test", headers=["Module", "Error", "Rate"], data=data
-        )
+    # show_percentage is True, but should auto-skip gracefully
+    table = renderer.get_table(
+        title="Test", headers=["Module", "Error"], data=data, show_percentage=True
+    )
+    assert isinstance(table, Table)
 
 
-def test_get_table_percentage_true_with_string_value_raises_valueerror():
+def test_get_table_percentage_true_with_all_numeric_still_shows_percentage():
     renderer = RichOutput()
-    data = {"avg docstring length": "13.9 words", "total": 100}
-    with pytest.raises(ValueError, match="invalid literal for int"):
-        renderer.get_table(
-            title="Test", headers=["Metric", "Value", "Rate"], data=data
-        )
+    data = {"a": 10, "b": 90, "total": 100}
+    table = renderer.get_table(
+        title="Test", headers=["Metric", "Value", "Rate"], data=data, show_percentage=True
+    )
+    assert isinstance(table, Table)
+
+
+def test_all_values_numeric_helper():
+    renderer = RichOutput()
+    assert renderer._all_values_numeric({"a": 1, "b": "2", "c": 3.0}) is True
+    assert renderer._all_values_numeric({"a": "13.9 words"}) is False
+    assert renderer._all_values_numeric({"a": 1, "b": "abc"}) is False
+    assert renderer._all_values_numeric({}) is True
