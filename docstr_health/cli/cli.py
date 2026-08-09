@@ -69,6 +69,15 @@ class RichOutput:
         return f"{self._get_symbol(status)} {status}"
 
     @staticmethod
+    def _all_values_numeric(data: dict) -> bool:
+        for v in data.values():
+            try:
+                float(v)
+            except (ValueError, TypeError):
+                return False
+        return True
+
+    @staticmethod
     def prepare_dict_table(
         data: dict, sorting_reference: list | None = None
     ) -> list[tuple]:
@@ -95,6 +104,7 @@ class RichOutput:
         data: dict,
         sorting_reference: list | None = None,
         last_line_separator: bool = False,
+        show_percentage: bool = True,
     ) -> Table:
         table = Table(title=title)
 
@@ -107,11 +117,13 @@ class RichOutput:
         end_section = False
 
         total_rows = len(table_data)
+        will_show_percentage = show_percentage and self._all_values_numeric(data)
         total = 0
-        if 'total' in data:
-            total = data['total']
-        else: 
-            total = sum([cnt for _, cnt in data.items()])
+        if will_show_percentage:
+            if 'total' in data:
+                total = data['total']
+            else: 
+                total = sum([cnt for _, cnt in data.items()])
 
         for i, (status, count) in enumerate(table_data):
             # last line check
@@ -125,6 +137,9 @@ class RichOutput:
                 style=style,
                 justify="left",
             )
-            percentage = round(int(count) / total * 100, 1)
-            table.add_row(status_text, str(count), f'{percentage}%', end_section=end_section)
+            if will_show_percentage:
+                percentage = round(float(count) / total * 100, 1) if total else 0.0
+                table.add_row(status_text, str(count), f'{percentage}%', end_section=end_section)
+            else:
+                table.add_row(status_text, str(count), end_section=end_section)
         return table
