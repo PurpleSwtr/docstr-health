@@ -33,7 +33,8 @@ def main():
 
     config.ensure_directories()
     settings = AppSettings.from_args(args)
-    renderer = RichOutput(quiet=config.parameters.get("ci", False))
+    config.parameters["ci"] = settings.ci
+    renderer = RichOutput(quiet=settings.ci)
 
     if settings.cache_dir:
         config.set_cache_dir(settings.cache_dir)
@@ -87,7 +88,7 @@ def main():
             )
         )
 
-    renderer.display_summary(tables_to_display)  
+    renderer.display_summary(tables_to_display)
 
     renderer.display_project_report(project_report=project_report)
 

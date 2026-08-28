@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.4] - 2026-08-28
+
+### Bug Fixes
+
+- Fix silent output
+- CI mode was enabled by default (`ci = true`), suppressing all terminal output
+- CI mode now can be enabled explicitly with the `--ci` flag or via `ci = true` in config
+
 ## [0.1.3] - 2026-08-28
 
 ### Features

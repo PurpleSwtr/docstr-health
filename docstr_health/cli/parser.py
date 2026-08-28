@@ -77,6 +77,12 @@ def get_parser():
         help="Replaces full path to the file with short ones",
     )
 
+    parser.add_argument(
+        "--ci",
+        action="store_true",
+        help="CI mode suppress output, exit 1 if status ≤ failure_level",
+    )
+
     measurement_group = parser.add_argument_group("parameters of methods measurement")
 
     measurement_group.add_argument(

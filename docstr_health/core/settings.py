@@ -14,6 +14,7 @@ class AppSettings:
         no_cache: bool = False,
         ignore_tests: bool = False,
         short_names: bool = False,
+        ci: bool = False,
         repo_url: str | None = None,
         pypi_package: str | None = None,
         threshold_bad: int | None = None,
@@ -28,6 +29,7 @@ class AppSettings:
         self.no_cache = no_cache
         self.ignore_tests = ignore_tests
         self.short_names = short_names
+        self.ci = ci or config.parameters.get("ci", False)
         self.repo_url = repo_url
         self.pypi_package = pypi_package
         self.threshold_bad = threshold_bad
@@ -46,6 +48,7 @@ class AppSettings:
             doc_check=args.doc_modules,
             compact=args.compact,
             short_names=args.short_names,
+            ci=args.ci,
             no_cache=args.no_cache,
             repo_url=args.repo_url,
             pypi_package=args.pypi_package,

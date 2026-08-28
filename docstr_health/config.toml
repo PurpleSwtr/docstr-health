@@ -10,7 +10,7 @@ threshold_warning = 60
 threshold_special = 50
 threshold_epic = 50
 
-ci = true
+ci = false
 failure_level = "warning"
 
 common_symbol = "●"
