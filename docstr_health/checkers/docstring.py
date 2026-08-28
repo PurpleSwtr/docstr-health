@@ -162,10 +162,10 @@ class DocstringChecker(BaseChecker):
             self.inspected_statuses["bad"] += 1
             return StatusDocstring.BAD
 
-        if any(req in docstring for req in config.requires["epic"]):
+        if any(req in str(docstring) for req in config.requires["epic"]):
             self.inspected_statuses["epic"] += 1
             return StatusDocstring.EPIC
-        if any(req in docstring for req in config.requires["special"]):
+        if any(req in str(docstring) for req in config.requires["special"]):
             self.inspected_statuses["special"] += 1
             return StatusDocstring.SPECIAL
 

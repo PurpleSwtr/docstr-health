@@ -26,3 +26,4 @@ build/
 .python-version
 .coverage
 scripts/
+htmlcov/

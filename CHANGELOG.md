@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.3] - 2026-08-28
+
+### Features
+
+- Add percentage metrics to file and overall statistics tables
+- Support configuration via `pyproject.toml` with `[tool.docstr-health]` section
+- Add `--short-names` flag to display short module names instead of full paths
+- Add configurable status thresholds
+- Add CI mode for quiet output and non-zero exit code when project status falls below the configured level
+
+### Bug Fixes
+
+- Fix double counting of functions and classes
+- Fix memory leak by clearing cached functions on tree release and sharing a single output instance
+- Speed up large-codebase scanning (CPython now checked in ~20 seconds instead ~140 seconds) via AST caching and disabled type-comment parsing
+- Reduce I/O by loading `pyproject.toml` config once
+- Use `file://` URI format instead of raw paths in report titles
+
+### Refactoring
+
+- Introduce `DocstrHealthError` base class with dedicated exceptions and non-zero exit codes
+
 ## [0.1.2] - 2026-07-10
 
 ### Bug Fixes
