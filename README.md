@@ -17,6 +17,9 @@
   <a href="https://pypi.org/project/docstr-health/">
     <img src="https://img.shields.io/pypi/dm/docstr-health" alt="Downloads">
   </a>
+  <a href="https://github.com/PurpleSwtr/docstr-health/actions/workflows/tests.yml">
+    <img src="https://github.com/PurpleSwtr/docstr-health/actions/workflows/tests.yml/badge.svg" alt="tests">
+  </a>
   <a href="https://github.com/PurpleSwtr/docstr-health">
     <img src="https://img.shields.io/github/stars/PurpleSwtr/docstr-health?style=social" alt="GitHub stars">
   </a>
